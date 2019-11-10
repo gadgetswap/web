@@ -61,7 +61,12 @@ const BrowseAll: NextPage<Props> = ({ user }) => {
       <Header user={user} />
 
       <main>
-        <h1>Browse / All</h1>
+        <h1>
+          <Link href="/browse">
+            <a>Browse</a>
+          </Link>
+          /All
+        </h1>
         <Main>
           {loading && <Spinner dark gutter />}
           {data && data.gadgets.length === 0 && (
