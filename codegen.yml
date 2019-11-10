@@ -1,0 +1,8 @@
+schema: http://localhost:4003
+overwrite: true
+generates:
+  graphql/types.ts:
+    plugins:
+      - add: '/* eslint-disable */'
+      - add: '// @ts-nocheck'
+      - typescript
