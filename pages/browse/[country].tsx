@@ -18,12 +18,12 @@ const Main = styled.section`
   margin: -1em;
 
   a {
-    border: 1px solid ${colors.backgroundDark};
+    background: ${colors.backgroundDark};
     padding: 1em;
     margin: 1em;
 
     &:hover {
-      background: ${colors.backgroundDark};
+      background: ${colors.accent};
     }
 
     &:active {
