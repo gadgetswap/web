@@ -2,8 +2,8 @@ import Link from 'next/link'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
-import { img_gadgetswap_active } from '../assets'
 import { User } from '../graphql/types'
+import { Logo } from './logo'
 import { NavLink } from './nav-link'
 
 const Main = styled.header`
@@ -11,10 +11,19 @@ const Main = styled.header`
   display: flex;
   justify-content: space-between;
 
-  img {
-    height: 2em;
-    margin: 2em;
-    width: 2em;
+  > a {
+    align-items: center;
+    display: flex;
+
+    svg {
+      height: 2em;
+      margin: 2em 1em 2em 2em;
+      width: 2em;
+    }
+
+    span {
+      font-weight: 500;
+    }
   }
 
   nav {
@@ -36,12 +45,15 @@ export const Header: FunctionComponent<Props> = ({ user }) => (
   <Main>
     <Link href="/">
       <a>
-        <img src={img_gadgetswap_active} alt="GadgetSwap" />
+        <Logo />
+        <span>GadgetSwap</span>
       </a>
     </Link>
     {user && (
       <nav>
         <NavLink href="/browse">Browse</NavLink>
+        <NavLink href="/requests">Requests</NavLink>
+        <NavLink href="/profile">Profile</NavLink>
         <Link href="/logout">
           <a>Sign out</a>
         </Link>
