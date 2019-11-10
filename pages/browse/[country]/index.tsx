@@ -84,7 +84,7 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
       <main>
         <h1>Browse / {country}</h1>
         <Main>
-          {loading && <Spinner dark />}
+          {loading && <Spinner dark gutter />}
           {data && data.locations.length === 0 && (
             <Error>
               <p>No locations found in your selected country.</p>

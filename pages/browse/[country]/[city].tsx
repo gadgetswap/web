@@ -82,7 +82,7 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
           Browse / {country} / {city}
         </h1>
         <Main>
-          {loading && <Spinner dark />}
+          {loading && <Spinner dark gutter />}
           {data && data.gadgets.length === 0 && (
             <Error>
               <p>No gadgets found in your selected location.</p>
