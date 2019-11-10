@@ -17,7 +17,7 @@ const Main = styled.section`
   flex-wrap: wrap;
   margin: -1em;
 
-  a {
+  > a {
     background: ${colors.backgroundDark};
     padding: 1em;
     margin: 1em;
@@ -30,6 +30,15 @@ const Main = styled.section`
       background: ${colors.primary};
       color: ${colors.background};
     }
+  }
+`
+
+const Error = styled.div`
+  color: ${colors.state.error};
+  margin: 0 1em;
+
+  a {
+    color: ${colors.state.message};
   }
 `
 
@@ -75,6 +84,16 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
         <h1>Browse / {country}</h1>
         <Main>
           {loading && <Spinner dark />}
+          {data && data.locations.length === 0 && (
+            <Error>
+              <p>No locations found in your selected country.</p>
+              <p>
+                <Link href="/browse">
+                  <a>Try another?</a>
+                </Link>
+              </p>
+            </Error>
+          )}
           {data &&
             data.locations.map(({ city }, index) => (
               <Link key={index} href={`/browse/${country}/${city}`}>
