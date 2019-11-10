@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
-import { img_gadgetswap, img_gadgetswap_active } from '../assets'
+import { img_gadgetswap_active } from '../assets'
 import { User } from '../graphql/types'
 import { NavLink } from './nav-link'
 
@@ -33,33 +32,26 @@ interface Props {
   user?: User
 }
 
-export const Header: FunctionComponent<Props> = ({ user }) => {
-  const { pathname } = useRouter()
-
-  return (
-    <Main>
-      <Link href="/">
-        <a>
-          <img
-            src={pathname === '/' ? img_gadgetswap_active : img_gadgetswap}
-            alt="GadgetSwap"
-          />
-        </a>
-      </Link>
-      {user && (
-        <nav>
-          <NavLink href="/browse">Browse</NavLink>
-          <Link href="/logout">
-            <a>Sign out</a>
-          </Link>
-        </nav>
-      )}
-      {!user && (
-        <nav>
-          <NavLink href="/register">Sign up</NavLink>
-          <NavLink href="/login">Sign in</NavLink>
-        </nav>
-      )}
-    </Main>
-  )
-}
+export const Header: FunctionComponent<Props> = ({ user }) => (
+  <Main>
+    <Link href="/">
+      <a>
+        <img src={img_gadgetswap_active} alt="GadgetSwap" />
+      </a>
+    </Link>
+    {user && (
+      <nav>
+        <NavLink href="/browse">Browse</NavLink>
+        <Link href="/logout">
+          <a>Sign out</a>
+        </Link>
+      </nav>
+    )}
+    {!user && (
+      <nav>
+        <NavLink href="/register">Sign up</NavLink>
+        <NavLink href="/login">Sign in</NavLink>
+      </nav>
+    )}
+  </Main>
+)
