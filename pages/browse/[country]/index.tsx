@@ -82,7 +82,12 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
       <Header user={user} />
 
       <main>
-        <h1>Browse / {country}</h1>
+        <h1>
+          <Link href="/browse">
+            <a>Browse</a>
+          </Link>
+          /{country}
+        </h1>
         <Main>
           {loading && <Spinner dark gutter />}
           {data && data.locations.length === 0 && (

@@ -79,7 +79,14 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
 
       <main>
         <h1>
-          Browse / {country} / {city}
+          <Link href="/browse">
+            <a>Browse</a>
+          </Link>
+          /
+          <Link href={`/browse/${country}`}>
+            <a>{country}</a>
+          </Link>
+          /{city}
         </h1>
         <Main>
           {loading && <Spinner dark gutter />}
