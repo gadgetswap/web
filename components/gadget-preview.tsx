@@ -1,9 +1,9 @@
+import Link from 'next/link'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
 import { colors } from '../assets/styles'
 import { Gadget } from '../graphql/types'
-import Link from 'next/link'
 
 const Main = styled.a`
   background: ${colors.backgroundDark};
