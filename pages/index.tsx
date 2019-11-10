@@ -10,24 +10,22 @@ interface Props {
   user: User
 }
 
-const Home: NextPage<Props> = ({ user }) => {
-  return (
-    <>
-      <Head>
-        <title>GadgetSwap</title>
-      </Head>
+const Home: NextPage<Props> = ({ user }) => (
+  <>
+    <Head>
+      <title>GadgetSwap</title>
+    </Head>
 
-      <Header user={user} />
+    <Header user={user} />
 
-      <main>
-        <h1>GadgetSwap</h1>
-        <p>Discover and swap gadgets you don&apos;t want anymore.</p>
-      </main>
+    <main>
+      <h1>GadgetSwap</h1>
+      <p>Discover and swap gadgets you don&apos;t want anymore.</p>
+    </main>
 
-      <Footer />
-    </>
-  )
-}
+    <Footer />
+  </>
+)
 
 Home.getInitialProps = async context => {
   // @ts-ignore
