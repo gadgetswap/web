@@ -34,6 +34,10 @@ const GET_GADGETS = gql`
       id
       description
       images
+      location {
+        city
+        country
+      }
       quantity
       status
       title
@@ -66,7 +70,9 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
   return (
     <>
       <Head>
-        <title>Browse / GadgetSwap</title>
+        <title>
+          {city} / {country} / Browse / GadgetSwap
+        </title>
       </Head>
 
       <Header user={user} />
@@ -89,7 +95,7 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
           )}
           {data &&
             data.gadgets.map((gadget, index) => (
-              <GadgetPreview key={index} gadget={gadget} />
+              <GadgetPreview key={index} gadget={gadget} hideLocation />
             ))}
         </Main>
       </main>

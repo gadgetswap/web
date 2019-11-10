@@ -57,9 +57,11 @@ const Browse: NextPage<Props> = ({ user }) => {
 
       <main>
         <h1>Browse</h1>
-
         {loading && <Spinner dark />}
         <Main>
+          <Link href="/browse/all">
+            <a>All</a>
+          </Link>
           {data &&
             data.countries.map((country, index) => (
               <Link key={index} href={`/browse/${country}`}>

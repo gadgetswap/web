@@ -3,15 +3,17 @@ import styled from 'styled-components'
 
 import { colors } from '../assets/styles'
 import { Gadget } from '../graphql/types'
+import Link from 'next/link'
 
 const Main = styled.a`
   background: ${colors.backgroundDark};
-  flex: 0 1 calc(100% / 3 - 2em);
+  flex: 0 1 calc(100% / 4 - 2em);
   margin: 1em;
   padding: 2em;
   position: relative;
 
   h2 {
+    font-size: 2em;
     margin: 0;
   }
 `
@@ -44,24 +46,40 @@ const Images = styled.section`
 
 interface Props {
   gadget: Gadget
+  hideLocation?: boolean
 }
 
 export const GadgetPreview: FunctionComponent<Props> = ({
-  gadget: { description, images, quantity, title }
+  gadget: {
+    description,
+    id,
+    images,
+    location: { city, country },
+    quantity,
+    title
+  },
+  hideLocation
 }) => (
-  <Main>
-    <Quantity>{quantity}</Quantity>
-    <h2>{title}</h2>
-    <p>{description}</p>
-    <Images>
-      {images.map((image, index) => (
-        <figure
-          key={index}
-          style={{
-            backgroundImage: `url(${image})`
-          }}
-        />
-      ))}
-    </Images>
-  </Main>
+  <Link href={`/gadgets/${id}`}>
+    <Main>
+      <Quantity>{quantity}</Quantity>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      {!hideLocation && (
+        <p>
+          {city}, {country}
+        </p>
+      )}
+      <Images>
+        {images.map((image, index) => (
+          <figure
+            key={index}
+            style={{
+              backgroundImage: `url(${image})`
+            }}
+          />
+        ))}
+      </Images>
+    </Main>
+  </Link>
 )

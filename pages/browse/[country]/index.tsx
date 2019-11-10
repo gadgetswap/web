@@ -76,7 +76,7 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
   return (
     <>
       <Head>
-        <title>Browse / GadgetSwap</title>
+        <title>{country} / Browse / GadgetSwap</title>
       </Head>
 
       <Header user={user} />
