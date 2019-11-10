@@ -4,33 +4,19 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies'
 import React from 'react'
 import styled from 'styled-components'
 
-import { colors } from '../../assets/styles'
-import { Footer, Header, Spinner } from '../../components'
-import { Location, QueryLocationsArgs, User } from '../../graphql/types'
-import { redirect, withAuth } from '../../lib'
+import { colors } from '../../../assets/styles'
+import { Footer, GadgetPreview, Header, Spinner } from '../../../components'
+import { Gadget, QueryGadgetsArgs, User } from '../../../graphql/types'
+import { redirect, withAuth } from '../../../lib'
 
 const Main = styled.section`
   display: flex;
   flex-wrap: wrap;
   margin: -1em;
-
-  > a {
-    background: ${colors.backgroundDark};
-    padding: 1em;
-    margin: 1em;
-
-    &:hover {
-      background: ${colors.accent};
-    }
-
-    &:active {
-      background: ${colors.primary};
-      color: ${colors.background};
-    }
-  }
 `
 
 const Error = styled.div`
@@ -42,33 +28,38 @@ const Error = styled.div`
   }
 `
 
-const GET_LOCATIONS = gql`
-  query locations($country: String!) {
-    locations(country: $country) {
+const GET_GADGETS = gql`
+  query gadgets($locationId: ID!) {
+    gadgets(locationId: $locationId) {
       id
-      city
-      country
+      description
+      images
+      quantity
+      status
+      title
+      createdAt
     }
   }
 `
 
 interface Props {
+  locationId: string
   user: User
 }
 
-const BrowseCountry: NextPage<Props> = ({ user }) => {
-  const { query } = useRouter()
-
-  const country = query.country as string
+const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
+  const {
+    query: { city, country }
+  } = useRouter()
 
   const { data, loading } = useQuery<
     {
-      locations: Location[]
+      gadgets: Gadget[]
     },
-    QueryLocationsArgs
-  >(GET_LOCATIONS, {
+    QueryGadgetsArgs
+  >(GET_GADGETS, {
     variables: {
-      country
+      locationId
     }
   })
 
@@ -81,12 +72,14 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
       <Header user={user} />
 
       <main>
-        <h1>Browse / {country}</h1>
+        <h1>
+          Browse / {country} / {city}
+        </h1>
         <Main>
           {loading && <Spinner dark />}
-          {data && data.locations.length === 0 && (
+          {data && data.gadgets.length === 0 && (
             <Error>
-              <p>No locations found in your selected country.</p>
+              <p>No gadgets found in your selected location.</p>
               <p>
                 <Link href="/browse">
                   <a>Try another?</a>
@@ -95,10 +88,8 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
             </Error>
           )}
           {data &&
-            data.locations.map(({ city }, index) => (
-              <Link key={index} href={`/browse/${country}/${city}`}>
-                <a>{city}</a>
-              </Link>
+            data.gadgets.map((gadget, index) => (
+              <GadgetPreview key={index} gadget={gadget} />
             ))}
         </Main>
       </main>
@@ -108,7 +99,7 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
   )
 }
 
-BrowseCountry.getInitialProps = async context => {
+BrowseCity.getInitialProps = async context => {
   // @ts-ignore
   const user = await withAuth(context.apolloClient)
 
@@ -116,9 +107,16 @@ BrowseCountry.getInitialProps = async context => {
     redirect(context, '/login')
   }
 
+  const { locationId } = parseCookies(context)
+
+  if (!locationId) {
+    redirect(context, '/browse')
+  }
+
   return {
+    locationId,
     user
   }
 }
 
-export default BrowseCountry
+export default BrowseCity

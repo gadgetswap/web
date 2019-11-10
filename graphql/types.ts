@@ -101,25 +101,25 @@ export type Mutation = {
 
 export type MutationCreateCommentArgs = {
   body: Scalars['String'],
-  gadgetId: Scalars['String']
+  gadgetId: Scalars['ID']
 };
 
 
 export type MutationCreateGadgetArgs = {
   data: CreateGadgetInput,
-  locationId: Scalars['String']
+  locationId: Scalars['ID']
 };
 
 
 export type MutationRequestGadgetArgs = {
   description: Scalars['String'],
-  gadgetId: Scalars['String']
+  gadgetId: Scalars['ID']
 };
 
 
 export type MutationUpdateRequestArgs = {
-  gadgetId: Scalars['String'],
-  requestId: Scalars['String'],
+  gadgetId: Scalars['ID'],
+  requestId: Scalars['ID'],
   status: GadgetRequestStatus
 };
 
@@ -154,22 +154,22 @@ export type Query = {
 
 
 export type QueryGadgetCommentsArgs = {
-  gadgetId: Scalars['String']
+  gadgetId: Scalars['ID']
 };
 
 
 export type QueryGadgetsArgs = {
-  locationId: Scalars['String']
+  locationId?: Maybe<Scalars['ID']>
 };
 
 
 export type QueryGadgetArgs = {
-  gadgetId: Scalars['String']
+  gadgetId: Scalars['ID']
 };
 
 
 export type QueryGadgetRequestsArgs = {
-  gadgetId: Scalars['String']
+  gadgetId: Scalars['ID']
 };
 
 
