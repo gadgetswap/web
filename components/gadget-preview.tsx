@@ -12,6 +12,11 @@ const Main = styled.a`
   padding: 2em;
   position: relative;
 
+  &:hover {
+    background: ${colors.primary};
+    color: ${colors.background};
+  }
+
   h2 {
     font-size: 2em;
     margin: 0;
