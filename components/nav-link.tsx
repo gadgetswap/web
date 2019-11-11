@@ -10,11 +10,11 @@ const Main = styled.a`
 `
 
 export const NavLink: FunctionComponent<LinkProps> = ({ children, href }) => {
-  const { pathname } = useRouter()
+  const { asPath } = useRouter()
 
   return (
     <Link href={href}>
-      <Main className={pathname.indexOf(href.toString()) === 0 ? 'active' : ''}>
+      <Main className={asPath.indexOf(href.toString()) === 0 ? 'active' : ''}>
         {children}
       </Main>
     </Link>

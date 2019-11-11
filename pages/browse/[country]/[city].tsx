@@ -116,10 +116,6 @@ BrowseCity.getInitialProps = async context => {
   // @ts-ignore
   const user = await withAuth(context.apolloClient)
 
-  if (!user) {
-    redirect(context, '/login')
-  }
-
   const { locationId } = parseCookies(context)
 
   if (!locationId) {

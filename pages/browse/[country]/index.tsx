@@ -123,10 +123,6 @@ BrowseCountry.getInitialProps = async context => {
   // @ts-ignore
   const user = await withAuth(context.apolloClient)
 
-  if (!user) {
-    redirect(context, '/login')
-  }
-
   return {
     user
   }
