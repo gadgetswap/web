@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 import { colors } from '../../../assets/styles'
 import { Footer, Header, Spinner } from '../../../components'
-import { Location, QueryLocationsArgs, User } from '../../../graphql/types'
+import { Location, QueryLocationsArgs, User } from '../../../types/graphql'
 import { redirect, withAuth } from '../../../lib'
 
 const Main = styled.section`

@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
 import { colors } from '../assets/styles'
-import { Gadget } from '../graphql/types'
+import { Gadget } from '../types/graphql'
 
 const Main = styled.a`
   background: ${colors.backgroundDark};

@@ -1,7 +1,7 @@
 schema: http://localhost:4003
 overwrite: true
 generates:
-  graphql/types.ts:
+  types/graphql.ts:
     plugins:
       - add: '/* eslint-disable */'
       - add: '// @ts-nocheck'

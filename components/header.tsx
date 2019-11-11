@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
-import { User } from '../graphql/types'
+import { User } from '../types/graphql'
 import { Logo } from './logo'
 import { NavLink } from './nav-link'
 

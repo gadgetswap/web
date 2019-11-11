@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from 'apollo-boost'
 import gql from 'graphql-tag'
 
-import { User } from '../graphql/types'
+import { User } from '../types/graphql'
 
 const GET_PROFILE = gql`
   query profile {

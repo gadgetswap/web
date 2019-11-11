@@ -3,7 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 
 import { Footer, Header } from '../components'
-import { User } from '../graphql/types'
+import { User } from '../types/graphql'
 import { withAuth } from '../lib'
 
 interface Props {

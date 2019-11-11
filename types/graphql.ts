@@ -107,7 +107,7 @@ export type MutationCreateCommentArgs = {
 
 export type MutationCreateGadgetArgs = {
   data: CreateGadgetInput,
-  locationId: Scalars['ID']
+  location: CreateLocationInput
 };
 
 
