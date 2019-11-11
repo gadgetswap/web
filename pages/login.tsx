@@ -59,9 +59,9 @@ const Login: NextPage = () => {
           onSubmit={event => {
             event.preventDefault()
 
-            // if (email && password) {
-            login()
-            // }
+            if (email && password) {
+              login()
+            }
           }}>
           {error && <FormMessage message={error.message} type="error" />}
           <label>
