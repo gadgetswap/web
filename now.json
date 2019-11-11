@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "gadgetswap",
+  "regions": ["dub1", "sfo1"],
+  "build": {
+    "env": {
+      "uri": "@gadgetswap-api-uri"
+    }
+  }
+}

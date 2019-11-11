@@ -1,4 +1,10 @@
 const withImages = require('next-images')
 const withSass = require('@zeit/next-sass')
 
-module.exports = withImages(withSass())
+module.exports = withImages(
+  withSass({
+    env: {
+      uri: process.env.uri
+    }
+  })
+)

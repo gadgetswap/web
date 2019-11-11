@@ -24,6 +24,6 @@ export default withApollo(
           })
         }
       },
-      uri: 'http://localhost:4003'
+      uri: process.env.uri
     })
 )
