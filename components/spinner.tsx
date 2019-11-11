@@ -10,7 +10,6 @@ const Loading = styled.div<Props>`
     ${props => (props.dark ? colors.foreground : colors.background)};
   border-top-color: transparent;
   height: 1.25em;
-  margin: ${props => (props.gutter ? '1em' : 0)};
   width: 1.25em;
 
   @keyframes spinner {
@@ -26,9 +25,8 @@ const Loading = styled.div<Props>`
 
 interface Props {
   dark?: boolean
-  gutter?: boolean
 }
 
-export const Spinner: FunctionComponent<Props> = ({ dark, gutter }) => (
-  <Loading dark={dark} gutter={gutter} />
+export const Spinner: FunctionComponent<Props> = ({ dark }) => (
+  <Loading dark={dark} />
 )

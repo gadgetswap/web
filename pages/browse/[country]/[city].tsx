@@ -88,23 +88,24 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
           </Link>
           /{city}
         </h1>
-        <Main>
-          {loading && <Spinner dark gutter />}
-          {data && data.gadgets.length === 0 && (
-            <Error>
-              <p>No gadgets found in your selected location.</p>
-              <p>
-                <Link href="/browse">
-                  <a>Try another?</a>
-                </Link>
-              </p>
-            </Error>
-          )}
-          {data &&
-            data.gadgets.map((gadget, index) => (
+        {loading && <Spinner dark />}
+        {data && (
+          <Main>
+            {data.gadgets.length === 0 && (
+              <Error>
+                <p>No gadgets found in your selected location.</p>
+                <p>
+                  <Link href="/browse">
+                    <a>Try another?</a>
+                  </Link>
+                </p>
+              </Error>
+            )}
+            {data.gadgets.map((gadget, index) => (
               <GadgetPreview key={index} gadget={gadget} hideLocation />
             ))}
-        </Main>
+          </Main>
+        )}
       </main>
 
       <Footer />

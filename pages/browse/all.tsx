@@ -67,8 +67,8 @@ const BrowseAll: NextPage<Props> = ({ user }) => {
           </Link>
           /All
         </h1>
+        {loading && <Spinner dark />}
         <Main>
-          {loading && <Spinner dark gutter />}
           {data && data.gadgets.length === 0 && (
             <Error>
               <p>No gadgets found anywhere.</p>

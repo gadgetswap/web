@@ -88,20 +88,20 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
           </Link>
           /{country}
         </h1>
-        <Main>
-          {loading && <Spinner dark gutter />}
-          {data && data.locations.length === 0 && (
-            <Error>
-              <p>No locations found in your selected country.</p>
-              <p>
-                <Link href="/browse">
-                  <a>Try another?</a>
-                </Link>
-              </p>
-            </Error>
-          )}
-          {data &&
-            data.locations.map(({ city, id }, index) => (
+        {loading && <Spinner dark />}
+        {data && (
+          <Main>
+            {data.locations.length === 0 && (
+              <Error>
+                <p>No locations found in your selected country.</p>
+                <p>
+                  <Link href="/browse">
+                    <a>Try another?</a>
+                  </Link>
+                </p>
+              </Error>
+            )}
+            {data.locations.map(({ city, id }, index) => (
               <Link key={index} href={`/browse/${country}/${city}`}>
                 <a
                   onClick={() => {
@@ -111,7 +111,8 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
                 </a>
               </Link>
             ))}
-        </Main>
+          </Main>
+        )}
       </main>
 
       <Footer />
