@@ -18,6 +18,7 @@ const Main = styled.section`
 
   a {
     background: ${colors.backgroundDark};
+    border-radius: 0.25em;
     padding: 1em;
     margin: 1em;
 

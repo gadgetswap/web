@@ -7,6 +7,7 @@ import { Gadget } from '../types/graphql'
 
 const Main = styled.a`
   background: ${colors.backgroundDark};
+  border-radius: 0.25em;
   flex: 0 1 calc(100% / 4 - 2em);
   margin: 1em;
   padding: 2em;
@@ -20,6 +21,10 @@ const Main = styled.a`
   h2 {
     font-size: 2em;
     margin: 0;
+  }
+
+  p {
+    margin: 2em 0;
   }
 `
 
@@ -40,12 +45,13 @@ const Images = styled.section`
   margin: -1em;
 
   figure {
-    background-color: ${colors.background};
-    background-position: center;
-    background-size: cover;
-    height: 5em;
+    border-radius: 0.25em;
     margin: 1em;
-    width: 5em;
+    overflow: hidden;
+
+    img {
+      height: 4em;
+    }
   }
 `
 
@@ -77,12 +83,9 @@ export const GadgetPreview: FunctionComponent<Props> = ({
       )}
       <Images>
         {images.map((image, index) => (
-          <figure
-            key={index}
-            style={{
-              backgroundImage: `url(${image})`
-            }}
-          />
+          <figure key={index}>
+            <img src={image} alt={title} />
+          </figure>
         ))}
       </Images>
     </Main>
