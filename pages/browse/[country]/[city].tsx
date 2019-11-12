@@ -29,7 +29,7 @@ const Error = styled.div`
 `
 
 const GET_GADGETS = gql`
-  query gadgets($locationId: ID!) {
+  query gadgets($locationId: ID) {
     gadgets(locationId: $locationId) {
       id
       description
