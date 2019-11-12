@@ -8,8 +8,8 @@ import styled from 'styled-components'
 
 import { colors } from '../../assets/styles'
 import { Footer, GadgetPreview, Header, Spinner } from '../../components'
+import { withAuth } from '../../lib'
 import { Gadget, QueryGadgetsArgs, User } from '../../types/graphql'
-import { redirect, withAuth } from '../../lib'
 
 const Main = styled.section`
   display: flex;

@@ -4,7 +4,7 @@ const withSass = require('@zeit/next-sass')
 module.exports = withImages(
   withSass({
     env: {
-      uri: process.env.uri
+      API_URI: process.env.API_URI,
     }
   })
 )

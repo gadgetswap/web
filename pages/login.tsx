@@ -7,8 +7,8 @@ import Router from 'next/router'
 import React, { useState } from 'react'
 
 import { Button, Footer, FormMessage, Header } from '../components'
-import { AuthResult, MutationLoginArgs } from '../types/graphql'
 import { redirect, withAuth } from '../lib'
+import { AuthResult, MutationLoginArgs } from '../types/graphql'
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
