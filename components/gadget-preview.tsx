@@ -42,6 +42,7 @@ const Quantity = styled.div`
 
 const Images = styled.section`
   display: flex;
+  flex-wrap: wrap;
   margin: -1em;
 
   figure {
