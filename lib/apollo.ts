@@ -1,5 +1,3 @@
-const { API_URI } = process.env
-
 import ApolloClient, { InMemoryCache } from 'apollo-boost'
 import Cookies from 'js-cookie'
 import withApollo from 'next-with-apollo'
@@ -26,6 +24,6 @@ export default withApollo(
           })
         }
       },
-      uri: API_URI
+      uri: process.env.API_URI
     })
 )

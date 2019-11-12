@@ -51,6 +51,7 @@ export const Header: FunctionComponent<Props> = ({ user }) => (
     </Link>
     {user && (
       <nav>
+        <NavLink href="/create">Post</NavLink>
         <NavLink href="/browse">Browse</NavLink>
         <NavLink href="/requests">Requests</NavLink>
         <NavLink href="/profile">Profile</NavLink>

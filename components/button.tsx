@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { ButtonHTMLAttributes, FunctionComponent } from 'react'
 import styled from 'styled-components'
 
 import { Spinner } from './spinner'
@@ -12,6 +12,9 @@ interface Props {
   loading?: boolean
 }
 
-export const Button: FunctionComponent<Props> = ({ children, loading }) => (
-  <Main>{loading ? <Spinner /> : children}</Main>
-)
+export const Button: FunctionComponent<Props &
+  ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  loading,
+  ...props
+}) => <Main {...props}>{loading ? <Spinner /> : children}</Main>
