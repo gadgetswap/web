@@ -13,6 +13,7 @@ const Thumbs = styled.div`
 
   figure {
     border-radius: 0.25em;
+    cursor: pointer;
     margin: 1em;
     overflow: hidden;
 
@@ -27,24 +28,66 @@ const DropArea = styled.div<{ active: boolean }>`
     ${props => (props.active ? colors.foreground : colors.foregroundLight)};
   border-radius: 0.25em;
   height: 10em;
-  padding: 1em;
+  padding: 0 1em;
+`
+
+const Errors = styled.div`
+  margin: 2em 0;
+
+  div {
+    background: ${colors.state.error};
+    border-radius: 0.25em;
+    color: ${colors.background};
+    cursor: pointer;
+    margin: 1em 0;
+    padding: 1em;
+  }
 `
 
 interface Props {
+  disabled?: boolean
+
   onChange: (images: File[]) => void
+  onRemove: (index: number) => void
 }
 
-export const ImagePicker: FunctionComponent<Props> = ({ onChange }) => {
+export const ImagePicker: FunctionComponent<Props> = ({
+  disabled,
+  onChange,
+  onRemove
+}) => {
+  const [errors, setErrors] = useState<string[]>([])
   const [thumbs, setThumbs] = useState<string[]>([])
 
   const onDrop = useCallback(
     async files => {
+      if (disabled) {
+        return
+      }
+
+      setErrors([])
+
+      const errors = []
       const next = []
 
       await Promise.all(
         files.map(
           (file: File) =>
             new Promise((resolve, reject) => {
+              const { name, type, size } = file
+
+              if (!type.match(/(jpeg|jpg|png)/)) {
+                errors.push(`${name} is not acceptable`)
+
+                return resolve()
+              }
+
+              if (size > 1000 * 1000 * 3) {
+                errors.push(`${name} is too large`)
+
+                return resolve()
+              }
+
               const reader = new FileReader()
 
               reader.onabort = () => reject()
@@ -62,11 +105,12 @@ export const ImagePicker: FunctionComponent<Props> = ({ onChange }) => {
         )
       )
 
+      setErrors(errors)
       setThumbs([...thumbs, ...next])
 
       onChange(files)
     },
-    [thumbs, setThumbs, onChange]
+    [errors, thumbs, setErrors, setThumbs, onChange]
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -76,16 +120,49 @@ export const ImagePicker: FunctionComponent<Props> = ({ onChange }) => {
       {thumbs.length > 0 && (
         <Thumbs>
           {thumbs.map((thumb, index) => (
-            <figure key={index}>
+            <figure
+              key={index}
+              onClick={() => {
+                const copy = [...thumbs]
+
+                copy.splice(index, 1)
+
+                setThumbs(copy)
+
+                onRemove(index)
+              }}>
               <img src={thumb} />
             </figure>
           ))}
         </Thumbs>
       )}
       <DropArea active={isDragActive} {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? 'Drop files here' : 'Drop files here to upload'}
+        <input
+          {...getInputProps({
+            accept: '.jpg,.jpeg,.png',
+            disabled
+          })}
+        />
+        <p>Drop images (JPGs, PNGs) under 3mb here.</p>
+        {thumbs.length > 0 && <p>Click an image to remove.</p>}
       </DropArea>
+      {errors.length > 0 && (
+        <Errors>
+          {errors.map((error, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                const copy = [...errors]
+
+                copy.splice(index, 1)
+
+                setErrors(copy)
+              }}>
+              {error}
+            </div>
+          ))}
+        </Errors>
+      )}
     </Main>
   )
 }

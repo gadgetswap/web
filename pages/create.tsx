@@ -141,6 +141,7 @@ const Create: NextPage<Props> = ({ user }) => {
           <section>
             <h3>Location</h3>
             <LocationSelector
+              disabled={loading || uploading}
               placeholder="Pick your city"
               onChange={location => setLocation(location)}
             />
@@ -150,6 +151,7 @@ const Create: NextPage<Props> = ({ user }) => {
             <label>
               <span>Catchy title</span>
               <input
+                disabled={loading || uploading}
                 onChange={event => setTitle(event.target.value)}
                 placeholder="Title"
                 required
@@ -160,6 +162,7 @@ const Create: NextPage<Props> = ({ user }) => {
             <label>
               <span>Describe the condition and what you want in return</span>
               <textarea
+                disabled={loading || uploading}
                 onChange={event => setDescription(event.target.value)}
                 placeholder="Description"
                 required
@@ -169,6 +172,7 @@ const Create: NextPage<Props> = ({ user }) => {
             <label>
               <span>How many gadgets do you have?</span>
               <input
+                disabled={loading || uploading}
                 max={5}
                 min={1}
                 onChange={event => setQuantity(Number(event.target.value))}
@@ -181,7 +185,17 @@ const Create: NextPage<Props> = ({ user }) => {
           </section>
           <section>
             <h3>Images</h3>
-            <ImagePicker onChange={images => setImages(images)} />
+            <ImagePicker
+              disabled={loading || uploading}
+              onChange={images => setImages(images)}
+              onRemove={index => {
+                const copy = [...images]
+
+                copy.splice(index, 1)
+
+                setImages(copy)
+              }}
+            />
           </section>
         </Form>
         <Button loading={loading || uploading} onClick={create}>

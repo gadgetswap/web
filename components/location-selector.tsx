@@ -57,12 +57,14 @@ const Results = styled.ul`
 `
 
 interface Props {
+  disabled?: boolean
   placeholder?: string
 
   onChange: (place: Place) => void
 }
 
 export const LocationSelector: FunctionComponent<Props> = ({
+  disabled,
   placeholder,
   onChange
 }) => {
@@ -93,6 +95,7 @@ export const LocationSelector: FunctionComponent<Props> = ({
       <label>
         <span>{placeholder || 'Location'}</span>
         <input
+          disabled={disabled}
           onChange={event => setQuery(event.target.value)}
           placeholder="Search"
           value={query}
