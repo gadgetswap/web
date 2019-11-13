@@ -3,20 +3,14 @@ import Head from 'next/head'
 import React from 'react'
 
 import { Footer, Header } from '../components'
-import { withAuth } from '../lib'
-import { User } from '../types/graphql'
 
-interface Props {
-  user: User
-}
-
-const Home: NextPage<Props> = ({ user }) => (
+const Home: NextPage = () => (
   <>
     <Head>
       <title>GadgetSwap</title>
     </Head>
 
-    <Header user={user} />
+    <Header />
 
     <main
       className="justify-center -z-2"
@@ -69,14 +63,5 @@ const Home: NextPage<Props> = ({ user }) => (
     `}</style>
   </>
 )
-
-Home.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
-
-  return {
-    user
-  }
-}
 
 export default Home

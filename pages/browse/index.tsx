@@ -6,8 +6,6 @@ import Link from 'next/link'
 import React from 'react'
 
 import { Footer, Header, Spinner } from '../../components'
-import { withAuth } from '../../lib'
-import { User } from '../../types/graphql'
 
 const GET_COUNTRIES = gql`
   query countries {
@@ -15,11 +13,7 @@ const GET_COUNTRIES = gql`
   }
 `
 
-interface Props {
-  user: User
-}
-
-const Browse: NextPage<Props> = ({ user }) => {
+const Browse: NextPage = () => {
   const { data, loading } = useQuery<{
     countries: string[]
   }>(GET_COUNTRIES)
@@ -30,7 +24,7 @@ const Browse: NextPage<Props> = ({ user }) => {
         <title>Browse / GadgetSwap</title>
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">Browse</h1>
@@ -54,15 +48,6 @@ const Browse: NextPage<Props> = ({ user }) => {
       <Footer />
     </>
   )
-}
-
-Browse.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
-
-  return {
-    user
-  }
 }
 
 export default Browse

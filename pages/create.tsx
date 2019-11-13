@@ -4,6 +4,7 @@ import nanoid from 'nanoid'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
+import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
 
 import {
@@ -14,9 +15,9 @@ import {
   LocationSelector,
   Spinner
 } from '../components'
-import { redirect, s3, withAuth } from '../lib'
+import { redirect, s3 } from '../lib'
 import { Place } from '../types'
-import { Gadget, MutationCreateGadgetArgs, User } from '../types/graphql'
+import { Gadget, MutationCreateGadgetArgs } from '../types/graphql'
 
 const CREATE_GADGET = gql`
   mutation createGadget(
@@ -38,11 +39,7 @@ const CREATE_GADGET = gql`
   }
 `
 
-interface Props {
-  user: User
-}
-
-const Create: NextPage<Props> = ({ user }) => {
+const Create: NextPage = () => {
   const [location, setLocation] = useState<Place>()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -93,7 +90,7 @@ const Create: NextPage<Props> = ({ user }) => {
         <title>Post / GadgetSwap</title>
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main className="flex flex-col">
         <h1 className="text-5xl	font-semibold">Post gadget</h1>
@@ -180,15 +177,14 @@ const Create: NextPage<Props> = ({ user }) => {
 }
 
 Create.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
+  const { token } = parseCookies(context)
 
-  if (!user) {
+  if (!token) {
     redirect(context, '/')
   }
 
   return {
-    user
+    token
   }
 }
 

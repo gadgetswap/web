@@ -8,8 +8,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 import { Footer, Header, Spinner } from '../../../components'
-import { withAuth } from '../../../lib'
-import { Location, QueryLocationsArgs, User } from '../../../types/graphql'
+import { Location, QueryLocationsArgs } from '../../../types/graphql'
 
 const GET_LOCATIONS = gql`
   query locations($country: String!) {
@@ -21,11 +20,7 @@ const GET_LOCATIONS = gql`
   }
 `
 
-interface Props {
-  user: User
-}
-
-const BrowseCountry: NextPage<Props> = ({ user }) => {
+const BrowseCountry: NextPage = () => {
   const { query } = useRouter()
 
   const country = query.country as string
@@ -47,7 +42,7 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
         <title>{country} / Browse / GadgetSwap</title>
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
@@ -87,15 +82,6 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
       <Footer />
     </>
   )
-}
-
-BrowseCountry.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
-
-  return {
-    user
-  }
 }
 
 export default BrowseCountry

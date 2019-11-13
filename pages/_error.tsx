@@ -1,23 +1,21 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, Header } from '../components'
-import { withAuth } from '../lib'
-import { User } from '../types/graphql'
 
 interface Props {
   code: number
-  user: User
 }
 
-const Error: NextPage<Props> = ({ code, user }) => (
+const Error: NextPage<Props> = ({ code }) => (
   <>
     <Head>
       <title>{code} / GadgetSwap</title>
     </Head>
 
-    <Header user={user} />
+    <Header />
 
     <main>
       <h1 className="text-5xl font-semibold mb-8">{code}</h1>
@@ -43,14 +41,16 @@ const Error: NextPage<Props> = ({ code, user }) => (
 )
 
 // @ts-ignore
-Error.getInitialProps = async ({ apolloClient, res, err }) => {
-  const user = await withAuth(apolloClient)
+Error.getInitialProps = async context => {
+  const { token } = parseCookies(context)
+
+  const { err, res } = context
 
   const code = res ? res.statusCode : err ? err.statusCode : 404
 
   return {
     code,
-    user
+    token
   }
 }
 

@@ -8,8 +8,8 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, GadgetPreview, Header, Spinner } from '../../../components'
-import { redirect, withAuth } from '../../../lib'
-import { Gadget, QueryGadgetsArgs, User } from '../../../types/graphql'
+import { redirect } from '../../../lib'
+import { Gadget, QueryGadgetsArgs } from '../../../types/graphql'
 
 const GET_GADGETS = gql`
   query gadgets($locationId: ID) {
@@ -31,10 +31,9 @@ const GET_GADGETS = gql`
 
 interface Props {
   locationId: string
-  user: User
 }
 
-const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
+const BrowseCity: NextPage<Props> = ({ locationId }) => {
   const {
     query: { city, country }
   } = useRouter()
@@ -58,7 +57,7 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
         </title>
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
@@ -99,9 +98,6 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
 }
 
 BrowseCity.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
-
   const { locationId } = parseCookies(context)
 
   if (!locationId) {
@@ -109,8 +105,7 @@ BrowseCity.getInitialProps = async context => {
   }
 
   return {
-    locationId,
-    user
+    locationId
   }
 }
 

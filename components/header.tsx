@@ -3,15 +3,13 @@ import Link from 'next/link'
 import React, { FunctionComponent, useState } from 'react'
 
 import { img_menu_close, img_menu_open } from '../assets'
-import { User } from '../types/graphql'
+import { useAuth } from '../hooks'
 import { Logo } from './logo'
 import { NavLink } from './nav-link'
 
-interface Props {
-  user?: User
-}
+export const Header: FunctionComponent = () => {
+  const { token } = useAuth()
 
-export const Header: FunctionComponent<Props> = ({ user }) => {
   const [visible, setVisible] = useState(false)
 
   return (
@@ -53,7 +51,7 @@ export const Header: FunctionComponent<Props> = ({ user }) => {
           'lg:flex-row',
           'lg:static'
         )}>
-        {user && (
+        {token && (
           <>
             <NavLink href="/create">Post</NavLink>
             <NavLink href="/browse">Browse</NavLink>
@@ -62,7 +60,7 @@ export const Header: FunctionComponent<Props> = ({ user }) => {
             <NavLink href="/logout">Sign out</NavLink>
           </>
         )}
-        {!user && (
+        {!token && (
           <>
             <NavLink href="/browse">Browse</NavLink>
             <NavLink href="/register">Sign up</NavLink>

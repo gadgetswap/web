@@ -6,8 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import { Footer, GadgetPreview, Header, Spinner } from '../../components'
-import { withAuth } from '../../lib'
-import { Gadget, QueryGadgetsArgs, User } from '../../types/graphql'
+import { Gadget, QueryGadgetsArgs } from '../../types/graphql'
 
 const GET_GADGETS = gql`
   query gadgets {
@@ -27,11 +26,7 @@ const GET_GADGETS = gql`
   }
 `
 
-interface Props {
-  user: User
-}
-
-const BrowseAll: NextPage<Props> = ({ user }) => {
+const BrowseAll: NextPage = () => {
   const { data, loading } = useQuery<
     {
       gadgets: Gadget[]
@@ -45,7 +40,7 @@ const BrowseAll: NextPage<Props> = ({ user }) => {
         <title>Browse all / GadgetSwap</title>
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
@@ -70,15 +65,6 @@ const BrowseAll: NextPage<Props> = ({ user }) => {
       <Footer />
     </>
   )
-}
-
-BrowseAll.getInitialProps = async context => {
-  // @ts-ignore
-  const user = await withAuth(context.apolloClient)
-
-  return {
-    user
-  }
 }
 
 export default BrowseAll
