@@ -4,23 +4,10 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
-import styled from 'styled-components'
 
-import { colors } from '../../assets/styles'
 import { Footer, GadgetPreview, Header, Spinner } from '../../components'
 import { withAuth } from '../../lib'
 import { Gadget, QueryGadgetsArgs, User } from '../../types/graphql'
-
-const Main = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1em;
-`
-
-const Error = styled.div`
-  color: ${colors.state.error};
-  margin: 0 1em;
-`
 
 const GET_GADGETS = gql`
   query gadgets {
@@ -61,24 +48,23 @@ const BrowseAll: NextPage<Props> = ({ user }) => {
       <Header user={user} />
 
       <main>
-        <h1>
+        <h1 className="text-5xl font-semibold mb-8">
           <Link href="/browse">
-            <a>Browse</a>
+            <a className="hover:text-gray-700">Browse</a>
           </Link>
-          /All
+          / All
         </h1>
-        {loading && <Spinner dark />}
-        <Main>
-          {data && data.gadgets.length === 0 && (
-            <Error>
-              <p>No gadgets found anywhere.</p>
-            </Error>
-          )}
-          {data &&
-            data.gadgets.map((gadget, index) => (
+        {loading && <Spinner />}
+        {data && (
+          <section className="flex flex-wrap -m-4">
+            {data.gadgets.length === 0 && (
+              <div className="text-red-500 m-4">No gadgets found anywhere.</div>
+            )}
+            {data.gadgets.map((gadget, index) => (
               <GadgetPreview key={index} gadget={gadget} />
             ))}
-        </Main>
+          </section>
+        )}
       </main>
 
       <Footer />

@@ -6,43 +6,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import styled from 'styled-components'
 
-import { colors } from '../../../assets/styles'
 import { Footer, Header, Spinner } from '../../../components'
 import { withAuth } from '../../../lib'
 import { Location, QueryLocationsArgs, User } from '../../../types/graphql'
-
-const Main = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1em;
-
-  > a {
-    background: ${colors.backgroundDark};
-    border-radius: 0.25em;
-    padding: 1em;
-    margin: 1em;
-
-    &:hover {
-      background: ${colors.accent};
-    }
-
-    &:active {
-      background: ${colors.primary};
-      color: ${colors.background};
-    }
-  }
-`
-
-const Error = styled.div`
-  color: ${colors.state.error};
-  margin: 0 1em;
-
-  a {
-    color: ${colors.state.message};
-  }
-`
 
 const GET_LOCATIONS = gql`
   query locations($country: String!) {
@@ -83,36 +50,37 @@ const BrowseCountry: NextPage<Props> = ({ user }) => {
       <Header user={user} />
 
       <main>
-        <h1>
+        <h1 className="text-5xl font-semibold mb-8">
           <Link href="/browse">
-            <a>Browse</a>
+            <a className="hover:text-gray-700">Browse </a>
           </Link>
-          /{country}
+          / {country}
         </h1>
-        {loading && <Spinner dark />}
+        {loading && <Spinner />}
         {data && (
-          <Main>
+          <section className="flex flex-wrap -m-4">
             {data.locations.length === 0 && (
-              <Error>
-                <p>No locations found in your selected country.</p>
-                <p>
+              <div className="m-4">
+                <p className="text-red-500">
+                  No cities found in your selected country.
+                </p>
+                <p className="text-blue-500 mt-4 font-medium">
                   <Link href="/browse">
                     <a>Try another?</a>
                   </Link>
                 </p>
-              </Error>
+              </div>
             )}
             {data.locations.map(({ city, id }, index) => (
               <Link key={index} href={`/browse/${country}/${city}`}>
                 <a
-                  onClick={() => {
-                    Cookies.set('locationId', id)
-                  }}>
+                  className="bg-gray-200 rounded m-4 p-4 hover:bg-accent"
+                  onClick={() => Cookies.set('locationId', id)}>
                   {city}
                 </a>
               </Link>
             ))}
-          </Main>
+          </section>
         )}
       </main>
 

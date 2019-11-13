@@ -6,7 +6,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import React, { useState } from 'react'
 
-import { Button, Footer, FormMessage, Header } from '../components'
+import { Footer, FormMessage, Header, Spinner } from '../components'
 import { redirect, withAuth } from '../lib'
 import { AuthResult, MutationRegisterArgs } from '../types/graphql'
 
@@ -50,13 +50,13 @@ const Register: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Register / GadgetSwap</title>
+        <title>Sign up / GadgetSwap</title>
       </Head>
 
       <Header />
 
       <main>
-        <h1>Register</h1>
+        <h1 className="text-5xl font-semibold">Sign up</h1>
         <form
           onSubmit={event => {
             event.preventDefault()
@@ -96,7 +96,7 @@ const Register: NextPage = () => {
               value={password}
             />
           </label>
-          <Button loading={loading}>Register</Button>
+          {loading ? <Spinner /> : <button>Sign up</button>}
         </form>
       </main>
 

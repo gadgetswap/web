@@ -6,27 +6,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
 import React from 'react'
-import styled from 'styled-components'
 
-import { colors } from '../../../assets/styles'
 import { Footer, GadgetPreview, Header, Spinner } from '../../../components'
 import { redirect, withAuth } from '../../../lib'
 import { Gadget, QueryGadgetsArgs, User } from '../../../types/graphql'
-
-const Main = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1em;
-`
-
-const Error = styled.div`
-  color: ${colors.state.error};
-  margin: 0 1em;
-
-  a {
-    color: ${colors.state.message};
-  }
-`
 
 const GET_GADGETS = gql`
   query gadgets($locationId: ID) {
@@ -78,33 +61,35 @@ const BrowseCity: NextPage<Props> = ({ locationId, user }) => {
       <Header user={user} />
 
       <main>
-        <h1>
+        <h1 className="text-5xl font-semibold mb-8">
           <Link href="/browse">
-            <a>Browse</a>
+            <a className="hover:text-gray-700">Browse </a>
           </Link>
           /
           <Link href={`/browse/${country}`}>
-            <a>{country}</a>
+            <a className="hover:text-gray-700"> {country} </a>
           </Link>
-          /{city}
+          / {city}
         </h1>
-        {loading && <Spinner dark />}
+        {loading && <Spinner />}
         {data && (
-          <Main>
+          <section className="flex flex-wrap -m-4">
             {data.gadgets.length === 0 && (
-              <Error>
-                <p>No gadgets found in your selected location.</p>
-                <p>
+              <div className="m-4">
+                <p className="text-red-500">
+                  No gadgets found in your selected city.
+                </p>
+                <p className="text-blue-500 mt-4 font-medium">
                   <Link href="/browse">
                     <a>Try another?</a>
                   </Link>
                 </p>
-              </Error>
+              </div>
             )}
             {data.gadgets.map((gadget, index) => (
               <GadgetPreview key={index} gadget={gadget} hideLocation />
             ))}
-          </Main>
+          </section>
         )}
       </main>
 

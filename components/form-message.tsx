@@ -1,26 +1,5 @@
+import clsx from 'clsx'
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
-
-import { colors } from '../assets/styles'
-
-const Main = styled.div`
-  border-radius: 0.25em;
-  color: ${colors.background};
-  margin: 2em 0;
-  padding: 1em;
-
-  &.error {
-    background: ${colors.state.error};
-  }
-
-  &.message {
-    background: ${colors.state.message};
-  }
-
-  &.success {
-    background: ${colors.state.success};
-  }
-`
 
 interface Props {
   message: string
@@ -28,5 +7,17 @@ interface Props {
 }
 
 export const FormMessage: FunctionComponent<Props> = ({ message, type }) => (
-  <Main className={type}>{message}</Main>
+  <div
+    className={clsx(
+      'rounded',
+      'font-medium',
+      'text-white',
+      'my-8',
+      'p-4',
+      type === 'message' && 'bg-blue-500',
+      type === 'error' && 'bg-red-500',
+      type === 'success' && 'bg-green-500'
+    )}>
+    {message}
+  </div>
 )

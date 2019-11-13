@@ -1,4 +1,3 @@
-export { Button } from './button'
 export { Footer } from './footer'
 export { FormMessage } from './form-message'
 export { GadgetPreview } from './gadget-preview'

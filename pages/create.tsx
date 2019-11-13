@@ -5,52 +5,18 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useState } from 'react'
-import styled from 'styled-components'
 
 import {
-  Button,
   Footer,
   FormMessage,
   Header,
   ImagePicker,
-  LocationSelector
+  LocationSelector,
+  Spinner
 } from '../components'
 import { redirect, s3, withAuth } from '../lib'
 import { Place } from '../types'
 import { Gadget, MutationCreateGadgetArgs, User } from '../types/graphql'
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-
-  button {
-    align-self: flex-start;
-  }
-`
-
-const Form = styled.form`
-  display: flex;
-  flex: 1;
-
-  section {
-    flex: 1;
-
-    &:not(:first-child) {
-      margin-left: 2em;
-    }
-
-    h3 {
-      margin-top: 0;
-    }
-
-    label {
-      input,
-      textarea {
-        width: 100%;
-      }
-    }
-  }
-`
 
 const CREATE_GADGET = gql`
   mutation createGadget(
@@ -129,79 +95,84 @@ const Create: NextPage<Props> = ({ user }) => {
 
       <Header user={user} />
 
-      <Main>
-        <h1>Post your gadget</h1>
-        {error && <FormMessage message={error.message} type="error" />}
-        <Form
+      <main className="flex flex-col">
+        <h1 className="text-5xl	font-semibold">Post gadget</h1>
+        <form
           onSubmit={event => {
             event.preventDefault()
 
             create()
           }}>
-          <section>
-            <h3>Location</h3>
-            <LocationSelector
-              disabled={loading || uploading}
-              placeholder="Pick your city"
-              onChange={location => setLocation(location)}
-            />
-          </section>
-          <section>
-            <h3>Details</h3>
-            <label>
-              <span>Catchy title</span>
-              <input
+          {error && <FormMessage message={error.message} type="error" />}
+          <div className="flex my-8 flex-col lg:flex-row">
+            <section className="flex-1">
+              <h3 className="text-3xl font-semibold mb-8">Location</h3>
+              <LocationSelector
                 disabled={loading || uploading}
-                onChange={event => setTitle(event.target.value)}
-                placeholder="Title"
-                required
-                type="text"
-                value={title}
+                placeholder="Pick your city"
+                onChange={location => setLocation(location)}
               />
-            </label>
-            <label>
-              <span>Describe the condition and what you want in return</span>
-              <textarea
+            </section>
+            <section className="flex-1 lg:ml-8">
+              <h3 className="text-3xl font-semibold mb-8">Details</h3>
+              <label>
+                <span>Catchy title</span>
+                <input
+                  className="w-full"
+                  disabled={loading || uploading}
+                  onChange={event => setTitle(event.target.value)}
+                  placeholder="Title"
+                  required
+                  type="text"
+                  value={title}
+                />
+              </label>
+              <label>
+                <span>Describe the condition and what you want in return</span>
+                <textarea
+                  className="w-full"
+                  disabled={loading || uploading}
+                  onChange={event => setDescription(event.target.value)}
+                  placeholder="Description"
+                  required
+                  value={description}
+                />
+              </label>
+              <label>
+                <span>How many gadgets do you have?</span>
+                <input
+                  className="w-full"
+                  disabled={loading || uploading}
+                  max={5}
+                  min={1}
+                  onChange={event => setQuantity(Number(event.target.value))}
+                  placeholder="Quantity"
+                  required
+                  type="number"
+                  value={quantity}
+                />
+              </label>
+            </section>
+            <section className="flex-1 lg:ml-8">
+              <h3 className="text-3xl font-semibold mb-8">Images</h3>
+              <ImagePicker
                 disabled={loading || uploading}
-                onChange={event => setDescription(event.target.value)}
-                placeholder="Description"
-                required
-                value={description}
-              />
-            </label>
-            <label>
-              <span>How many gadgets do you have?</span>
-              <input
-                disabled={loading || uploading}
-                max={5}
-                min={1}
-                onChange={event => setQuantity(Number(event.target.value))}
-                placeholder="Quantity"
-                required
-                type="number"
-                value={quantity}
-              />
-            </label>
-          </section>
-          <section>
-            <h3>Images</h3>
-            <ImagePicker
-              disabled={loading || uploading}
-              onChange={images => setImages(images)}
-              onRemove={index => {
-                const copy = [...images]
+                onChange={images => setImages(images)}
+                onRemove={index => {
+                  const copy = [...images]
 
-                copy.splice(index, 1)
+                  copy.splice(index, 1)
 
-                setImages(copy)
-              }}
-            />
-          </section>
-        </Form>
-        <Button loading={loading || uploading} onClick={create}>
-          Post
-        </Button>
-      </Main>
+                  setImages(copy)
+                }}
+              />
+            </section>
+          </div>
+          <footer className="self-start">
+            {loading ? <Spinner /> : <button>Post</button>}
+          </footer>
+        </form>
+      </main>
 
       <Footer />
     </>

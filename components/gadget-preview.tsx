@@ -1,60 +1,7 @@
 import Link from 'next/link'
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
 
-import { colors } from '../assets/styles'
 import { Gadget } from '../types/graphql'
-
-const Main = styled.a`
-  background: ${colors.backgroundDark};
-  border-radius: 0.25em;
-  flex: 0 1 calc(100% / 4 - 2em);
-  margin: 1em;
-  padding: 2em;
-  position: relative;
-
-  &:hover {
-    background: ${colors.primary};
-    color: ${colors.background};
-  }
-
-  h2 {
-    font-size: 2em;
-    margin: 0;
-  }
-
-  p {
-    margin: 2em 0;
-  }
-`
-
-const Quantity = styled.div`
-  background: ${colors.accent};
-  border-radius: 100%;
-  color: ${colors.primary};
-  line-height: 2em;
-  position: absolute;
-  right: 1em;
-  text-align: center;
-  top: 1em;
-  width: 2em;
-`
-
-const Images = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1em;
-
-  figure {
-    border-radius: 0.25em;
-    margin: 1em;
-    overflow: hidden;
-
-    img {
-      height: 4em;
-    }
-  }
-`
 
 interface Props {
   gadget: Gadget
@@ -73,22 +20,24 @@ export const GadgetPreview: FunctionComponent<Props> = ({
   hideLocation
 }) => (
   <Link href={`/gadgets/${id}`}>
-    <Main>
-      <Quantity>{quantity}</Quantity>
-      <h2>{title}</h2>
-      <p>{description}</p>
+    <a className="flex-gadget-1 lg:flex-gadget-2 xl:flex-gadget-3 bg-gray-100 rounded m-4 p-8 relative hover:bg-gray-300">
+      <div className="bg-accent rounded-full text-primary text-center leading-loose absolute w-8 top-0 right-0 m-4">
+        {quantity}
+      </div>
+      <h2 className="text-3xl font-medium">{title}</h2>
+      <p className="my-4">{description}</p>
       {!hideLocation && (
-        <p>
+        <p className="my-4">
           {city}, {country}
         </p>
       )}
-      <Images>
+      <div className="flex flex-wrap -m-4 mt-4">
         {images.map((image, index) => (
-          <figure key={index}>
-            <img src={image} alt={title} />
+          <figure key={index} className="rounded m-4 overflow-hidden">
+            <img className="h-16" src={image} alt={title} />
           </figure>
         ))}
-      </Images>
-    </Main>
+      </div>
+    </a>
   </Link>
 )

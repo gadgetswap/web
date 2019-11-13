@@ -1,71 +1,75 @@
+import clsx from 'clsx'
 import Link from 'next/link'
-import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
+import React, { FunctionComponent, useState } from 'react'
 
+import { img_menu_close, img_menu_open } from '../assets'
 import { User } from '../types/graphql'
 import { Logo } from './logo'
 import { NavLink } from './nav-link'
-
-const Main = styled.header`
-  align-items: stretch;
-  display: flex;
-  justify-content: space-between;
-
-  > a {
-    align-items: center;
-    display: flex;
-
-    svg {
-      height: 2em;
-      margin: 2em 1em 2em 2em;
-      width: 2em;
-    }
-
-    span {
-      font-weight: 500;
-    }
-  }
-
-  nav {
-    display: flex;
-
-    a {
-      align-items: center;
-      display: flex;
-      padding: 0 2em;
-    }
-  }
-`
 
 interface Props {
   user?: User
 }
 
-export const Header: FunctionComponent<Props> = ({ user }) => (
-  <Main>
-    <Link href="/">
-      <a>
-        <Logo />
-        <span>GadgetSwap</span>
+export const Header: FunctionComponent<Props> = ({ user }) => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <header className="flex items-stretch justify-between">
+      <Link href="/">
+        <a className="flex items-center">
+          <Logo className="h-8 w-8 my-8 ml-8 mr-4" />
+          <span className="font-medium mr-8">GadgetSwap</span>
+        </a>
+      </Link>
+      <a
+        className="fixed top-0 right-0 lg:hidden z-20"
+        href="#menu"
+        onClick={event => {
+          event.preventDefault()
+
+          setVisible(!visible)
+        }}>
+        <img
+          className="h-6 m-8 w-6"
+          src={visible ? img_menu_close : img_menu_open}
+          alt="Menu"
+        />
       </a>
-    </Link>
-    {user && (
-      <nav>
-        <NavLink href="/create">Post</NavLink>
-        <NavLink href="/browse">Browse</NavLink>
-        <NavLink href="/requests">Requests</NavLink>
-        <NavLink href="/profile">Profile</NavLink>
-        <Link href="/logout">
-          <a>Sign out</a>
-        </Link>
+      <nav
+        className={clsx(
+          'bg-modal',
+          'fixed',
+          'flex-col',
+          'inset-0',
+          'justify-center',
+          'right-0',
+          'top-0',
+          'z-10',
+
+          visible ? 'flex' : 'hidden',
+
+          'lg:flex',
+          'lg:flex-row',
+          'lg:static'
+        )}>
+        {user && (
+          <>
+            <NavLink href="/create">Post</NavLink>
+            <NavLink href="/browse">Browse</NavLink>
+            <NavLink href="/requests">Requests</NavLink>
+            <NavLink href="/profile">Profile</NavLink>
+            <NavLink href="/logout">Sign out</NavLink>
+          </>
+        )}
+        {!user && (
+          <>
+            <NavLink href="/browse">Browse</NavLink>
+            <NavLink href="/register">Sign up</NavLink>
+            <NavLink href="/login">Sign in</NavLink>
+          </>
+        )}
       </nav>
-    )}
-    {!user && (
-      <nav>
-        <NavLink href="/browse">Browse</NavLink>
-        <NavLink href="/register">Sign up</NavLink>
-        <NavLink href="/login">Sign in</NavLink>
-      </nav>
-    )}
-  </Main>
-)
+    </header>
+  )
+}

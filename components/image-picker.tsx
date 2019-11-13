@@ -1,48 +1,6 @@
+import clsx from 'clsx'
 import React, { FunctionComponent, useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import styled from 'styled-components'
-
-import { colors } from '../assets/styles'
-
-const Main = styled.div``
-
-const Thumbs = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1em -1em 1em;
-
-  figure {
-    border-radius: 0.25em;
-    cursor: pointer;
-    margin: 1em;
-    overflow: hidden;
-
-    img {
-      height: 8em;
-    }
-  }
-`
-
-const DropArea = styled.div<{ active: boolean }>`
-  border: 2px dashed
-    ${props => (props.active ? colors.foreground : colors.foregroundLight)};
-  border-radius: 0.25em;
-  height: 10em;
-  padding: 0 1em;
-`
-
-const Errors = styled.div`
-  margin: 2em 0;
-
-  div {
-    background: ${colors.state.error};
-    border-radius: 0.25em;
-    color: ${colors.background};
-    cursor: pointer;
-    margin: 1em 0;
-    padding: 1em;
-  }
-`
 
 interface Props {
   disabled?: boolean
@@ -116,12 +74,13 @@ export const ImagePicker: FunctionComponent<Props> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <Main>
+    <div>
       {thumbs.length > 0 && (
-        <Thumbs>
+        <div className="flex flex-wrap -mt-4 mb-4 -mx-4">
           {thumbs.map((thumb, index) => (
             <figure
               key={index}
+              className="rounded cursor-pointer m-4 overflow-hidden"
               onClick={() => {
                 const copy = [...thumbs]
 
@@ -131,12 +90,22 @@ export const ImagePicker: FunctionComponent<Props> = ({
 
                 onRemove(index)
               }}>
-              <img src={thumb} />
+              <img className="h-32" src={thumb} />
             </figure>
           ))}
-        </Thumbs>
+        </div>
       )}
-      <DropArea active={isDragActive} {...getRootProps()}>
+
+      <div
+        className={clsx(
+          'rounded',
+          'h-40',
+          'p-4',
+          'border-2',
+          'border-dashed',
+          isDragActive ? 'border-gray-800' : 'border-gray-500'
+        )}
+        {...getRootProps()}>
         <input
           {...getInputProps({
             accept: '.jpg,.jpeg,.png',
@@ -144,13 +113,14 @@ export const ImagePicker: FunctionComponent<Props> = ({
           })}
         />
         <p>Drop images (JPGs, PNGs) under 3mb here.</p>
-        {thumbs.length > 0 && <p>Click an image to remove.</p>}
-      </DropArea>
+        {thumbs.length > 0 && <p className="mt-4">Click an image to remove.</p>}
+      </div>
       {errors.length > 0 && (
-        <Errors>
+        <div className="my-8">
           {errors.map((error, index) => (
             <div
               key={index}
+              className="border-red-500 border-2 rounded text-red-500 cursor-pointer my-4 p-4 font-medium"
               onClick={() => {
                 const copy = [...errors]
 
@@ -161,8 +131,8 @@ export const ImagePicker: FunctionComponent<Props> = ({
               {error}
             </div>
           ))}
-        </Errors>
+        </div>
       )}
-    </Main>
+    </div>
   )
 }

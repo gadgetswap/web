@@ -20,18 +20,18 @@ const Error: NextPage<Props> = ({ code, user }) => (
     <Header user={user} />
 
     <main>
-      <h1>{code}</h1>
-      <h3>Holy moly!</h3>
+      <h1 className="text-5xl font-semibold mb-8">{code}</h1>
+      <h3 className="text-3xl font-semibold">Holy moly!</h3>
       {code === 404 ? (
         <>
-          <p>We can&apos;t find what you were looking for.</p>
-          <p>
+          <p className="mt-4">We can&apos;t find what you were looking for.</p>
+          <p className="mt-4">
             The authorities have been informed and we&apos;re looking into it
             right now.
           </p>
         </>
       ) : (
-        <p>
+        <p className="mt-4">
           Something terrible happened. Step away from your computer and lock the
           doors.
         </p>
