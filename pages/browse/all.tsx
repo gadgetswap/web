@@ -56,7 +56,7 @@ const BrowseAll: NextPage<Props> = ({ token }) => {
         </h1>
         {loading && <Spinner />}
         {data && (
-          <section className="flex flex-wrap -m-4">
+          <section className="flex flex-wrap items-start -m-4">
             {data.gadgets.length === 0 && (
               <div className="text-red-500 m-4">No gadgets found anywhere.</div>
             )}

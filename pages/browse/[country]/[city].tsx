@@ -73,7 +73,7 @@ const BrowseCity: NextPage<Props> = ({ locationId, token }) => {
         </h1>
         {loading && <Spinner />}
         {data && (
-          <section className="flex flex-wrap -m-4">
+          <section className="flex flex-wrap items-start -m-4">
             {data.gadgets.length === 0 && (
               <div className="m-4">
                 <p className="text-red-500">
