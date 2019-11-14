@@ -59,10 +59,14 @@ label {
   span {
     @apply block mb-4 font-medium;
   }
+
+  textarea {
+    min-height: 10em;
+  }
 }
 
 textarea {
-  min-height: 10em;
+  min-height: 8em;
 }
 
 // layout

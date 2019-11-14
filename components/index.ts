@@ -1,6 +1,7 @@
+export { CommentForm } from './comment-form'
 export { Footer } from './footer'
 export { FormMessage } from './form-message'
-export { GadgetPreview } from './gadget-preview'
+export { GadgetComments, GadgetDetails, GadgetPreview } from './gadgets'
 export { Header } from './header'
 export { ImagePicker } from './image-picker'
 export { LocationSelector } from './location-selector'

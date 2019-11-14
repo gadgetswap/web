@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React, { FunctionComponent } from 'react'
 
-import { Gadget } from '../types/graphql'
+import { Gadget } from '../../types/graphql'
 
 interface Props {
   gadget: Gadget
@@ -20,7 +20,7 @@ export const GadgetPreview: FunctionComponent<Props> = ({
   hideLocation
 }) => (
   <Link href={`/gadgets/${id}`}>
-    <a className="flex-gadget-1 lg:flex-gadget-2 xl:flex-gadget-3 bg-gray-100 rounded m-4 p-8 relative hover:bg-gray-300">
+    <a className="flex-gadget-1 lg:flex-gadget-2 bg-gray-100 rounded m-4 p-8 relative hover:bg-gray-300">
       <div className="bg-accent rounded-full text-primary text-center leading-loose absolute w-8 top-0 right-0 m-4">
         {quantity}
       </div>
