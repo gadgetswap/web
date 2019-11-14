@@ -9,6 +9,7 @@ import { Spinner } from './spinner'
 interface Props {
   disabled?: boolean
   placeholder?: string
+  required?: boolean
 
   onChange: (place: Place) => void
 }
@@ -16,6 +17,7 @@ interface Props {
 export const LocationSelector: FunctionComponent<Props> = ({
   disabled,
   placeholder,
+  required,
   onChange
 }) => {
   const [loading, setLoading] = useState(false)
@@ -50,6 +52,7 @@ export const LocationSelector: FunctionComponent<Props> = ({
             disabled={disabled}
             onChange={event => setQuery(event.target.value)}
             placeholder="Search"
+            required={required}
             value={query}
           />
         </label>

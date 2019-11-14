@@ -110,8 +110,9 @@ const Create: NextPage<Props> = ({ token }) => {
               <h3 className="text-3xl font-semibold mb-8">Location</h3>
               <LocationSelector
                 disabled={loading || uploading}
-                placeholder="Pick your city"
                 onChange={location => setLocation(location)}
+                placeholder="Pick your city"
+                required
               />
             </section>
             <section className="flex-1 lg:ml-8">
