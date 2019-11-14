@@ -26,15 +26,6 @@ const CREATE_GADGET = gql`
   ) {
     createGadget(data: $data, location: $location) {
       id
-      title
-      description
-      location {
-        city
-        country
-      }
-      images
-      quantity
-      createdAt
     }
   }
 `
