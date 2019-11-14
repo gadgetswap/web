@@ -11,6 +11,9 @@ export const GadgetComments: FunctionComponent<Props &
   HTMLAttributes<HTMLDivElement>> = ({ className, comments }) => (
   <div className={className}>
     <h2 className="text-4xl font-semibold">Comments</h2>
+    {comments.length === 0 && (
+      <div className="text-blue-500 my-8">No comments yet.</div>
+    )}
     {comments.map(({ body, createdAt, user: { id, name } }, index) => (
       <div key={index} className="flex my-8 items-center">
         <img
