@@ -13,13 +13,13 @@ interface Props {
 const Error: NextPage<Props> = ({ code, token }) => (
   <>
     <Head>
-      <title>{code} / GadgetSwap</title>
+      <title>{code || 'Error'} / GadgetSwap</title>
     </Head>
 
     <Header loggedIn={!!token} />
 
     <main>
-      <h1 className="text-5xl font-semibold mb-8">{code}</h1>
+      <h1 className="text-5xl font-semibold mb-8">{code || 'Error'}</h1>
       <h3 className="text-3xl font-semibold">Holy moly!</h3>
       {code === 404 ? (
         <>
