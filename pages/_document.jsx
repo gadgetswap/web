@@ -6,7 +6,7 @@ class Doc extends Document {
     return (
       <html>
         <Head />
-        <body className="font-sans cursor-default outline-none">
+        <body className="font-sans cursor-default outline-none container mx-auto w-full">
           <Main />
           <NextScript />
         </body>
