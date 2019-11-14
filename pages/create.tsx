@@ -170,7 +170,7 @@ const Create: NextPage<Props> = ({ token }) => {
             </section>
           </div>
           <footer className="self-start">
-            {loading ? <Spinner /> : <button>Post</button>}
+            {loading || uploading ? <Spinner /> : <button>Post</button>}
           </footer>
         </form>
       </main>
