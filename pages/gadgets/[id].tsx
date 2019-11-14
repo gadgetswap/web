@@ -131,16 +131,17 @@ const GadgetById: NextPage<Props> = ({ token }) => {
       <Header loggedIn={!!token} />
 
       <main>
-        {gadgetQuery.loading && <Spinner />}
+        {(gadgetQuery.loading || commentsQuery.loading) && (
+          <Spinner className="mb-8" />
+        )}
         {gadgetQuery.data && <GadgetDetails gadget={gadgetQuery.data.gadget} />}
-        {commentsQuery.loading && <Spinner />}
         {commentsQuery.data && (
           <GadgetComments
             className="mt-8"
             comments={commentsQuery.data.gadgetComments}
           />
         )}
-        {gadgetQuery.data && gadgetQuery.loading && (
+        {gadgetQuery.data && commentsQuery.data && (
           <CommentForm
             loading={createCommentMutation.loading || commentsQuery.loading}
             loggedIn={!!token}
