@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { FunctionComponent, HTMLAttributes } from 'react'
 
 import { Gadget, GadgetStatus } from '../../types/graphql'
+import { ImageWithZoom } from '../image-with-zoom'
 
 interface Props {
   gadget: Gadget
@@ -45,7 +46,11 @@ export const GadgetDetails: FunctionComponent<Props &
     <div className="flex flex-wrap bg-gray-100 rounded -mx-4 mt-8 p-4">
       {images.map((image, index) => (
         <figure key={index} className="rounded m-4 overflow-hidden">
-          <img className="w-full md:w-auto md:h-40" src={image} alt={title} />
+          <ImageWithZoom
+            className="w-full md:w-auto md:h-40"
+            source={image}
+            title={title}
+          />
         </figure>
       ))}
     </div>
