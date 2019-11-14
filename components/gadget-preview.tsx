@@ -25,7 +25,15 @@ export const GadgetPreview: FunctionComponent<Props> = ({
         {quantity}
       </div>
       <h2 className="text-3xl font-medium">{title}</h2>
-      <p className="my-4">{description}</p>
+      {description
+        .split('\n')
+        .map(description => description.trim())
+        .filter(Boolean)
+        .map((description, index) => (
+          <p key={index} className="my-4">
+            {description}
+          </p>
+        ))}
       {!hideLocation && (
         <p className="my-4">
           {city}, {country}
