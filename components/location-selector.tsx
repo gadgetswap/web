@@ -1,8 +1,7 @@
-import Head from 'next/head'
+import axios from 'axios'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { useDebounce } from '../hooks'
-import { places } from '../lib'
 import { Place } from '../types'
 import { Spinner } from './spinner'
 
@@ -31,9 +30,14 @@ export const LocationSelector: FunctionComponent<Props> = ({
     if (debounced && debounced !== selected) {
       setLoading(true)
 
-      places
-        .search(debounced)
-        .then(results => setResults(results))
+      axios
+        .request<Place[]>({
+          params: {
+            query: debounced
+          },
+          url: '/api/places'
+        })
+        .then(({ data }) => setResults(data))
         .finally(() => setLoading(false))
     }
   }, [debounced])
@@ -41,10 +45,6 @@ export const LocationSelector: FunctionComponent<Props> = ({
   return (
     <>
       <div className="relative">
-        <Head>
-          <script
-            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_KEY}&libraries=places`}></script>
-        </Head>
         <label>
           <span>{placeholder || 'Location'}</span>
           <input

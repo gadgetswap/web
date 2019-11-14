@@ -12,8 +12,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "target": "es5",
-    "types": ["googlemaps"]
+    "target": "es5"
   },
   "exclude": ["node_modules"],
   "include": ["*.d.ts", "**/*.ts", "**/*.tsx"]

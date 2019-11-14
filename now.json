@@ -7,8 +7,7 @@
       "API_URI": "@gadgetswap-api_uri",
       "AWS_IDENTITY_POOL": "@gadgetswap-aws_identity_pool",
       "AWS_REGION": "@gadgetswap-aws_region",
-      "AWS_S3_BUCKET": "@gadgetswap-aws_s3_bucket",
-      "GOOGLE_KEY": "@gadgetswap-google_key"
+      "AWS_S3_BUCKET": "@gadgetswap-aws_s3_bucket"
     }
   }
 }
