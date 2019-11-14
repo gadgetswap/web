@@ -119,7 +119,12 @@ const GadgetById: NextPage<Props> = ({ token }) => {
     }
   })
 
-  if (gadgetQuery.loading || commentsQuery.loading) {
+  if (
+    gadgetQuery.loading ||
+    !gadgetQuery.data ||
+    commentsQuery.loading ||
+    !commentsQuery.data
+  ) {
     return <Spinner />
   }
 
