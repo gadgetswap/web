@@ -129,7 +129,10 @@ const Create: NextPage<Props> = ({ token }) => {
                 />
               </label>
               <label>
-                <span>Describe the condition and what you want in return</span>
+                <span>
+                  Describe the condition of your gadget and what you want in
+                  return for it
+                </span>
                 <textarea
                   className="w-full"
                   disabled={loading || uploading}
