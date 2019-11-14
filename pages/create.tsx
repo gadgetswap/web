@@ -88,7 +88,7 @@ const Create: NextPage<Props> = ({ token }) => {
       <Header loggedIn={!!token} />
 
       <main className="flex flex-col">
-        <h1 className="text-5xl	font-semibold">Post gadget</h1>
+        <h1 className="text-5xl font-semibold">Post gadget</h1>
         <form
           onSubmit={event => {
             event.preventDefault()
