@@ -71,7 +71,7 @@ export const LocationSelector: FunctionComponent<Props> = ({
 
                   onChange(result)
                 }}>
-                {result.city}, {result.country}
+                {`${result.city}, ${result.country}`}
               </li>
             ))}
             {!loading && query === debounced && results.length === 0 && (

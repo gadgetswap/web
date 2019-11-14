@@ -30,7 +30,7 @@ export const GadgetDetails: FunctionComponent<Props &
       </span>
       <Link href={`/browse/${country}/${city}`}>
         <a className="font-medium bg-accent px-4 py-2 rounded-full mt-8 lg:mt-0 lg:ml-8">
-          {city}, {country}
+          {`${city}, ${country}`}
         </a>
       </Link>
     </div>
