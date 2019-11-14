@@ -17,6 +17,14 @@ export const CommentForm: FunctionComponent<Props> = ({
 }) => {
   const [body, setBody] = useState('')
 
+  const send = () => {
+    if (body.trim()) {
+      onReply(body.trim())
+
+      setBody('')
+    }
+  }
+
   if (loggedIn) {
     return (
       <form
@@ -24,17 +32,18 @@ export const CommentForm: FunctionComponent<Props> = ({
         onSubmit={event => {
           event.preventDefault()
 
-          if (body.trim()) {
-            onReply(body.trim())
-
-            setBody('')
-          }
+          send()
         }}>
         <textarea
           className="flex-1 bg-gray-200 border-none rounded-b-none md:rounded md:rounded-r-none resize-none"
           onChange={event => setBody(event.target.value)}
           placeholder="Say something nice"
           value={body}
+          onKeyDown={event => {
+            if (event.keyCode === 13 && (event.metaKey || event.ctrlKey)) {
+              send()
+            }
+          }}
         />
         <button className="flex items-center justify-center rounded-t-none md:rounded md:rounded-l-none md:w-40">
           {loading ? <Spinner light /> : 'Reply'}
