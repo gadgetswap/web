@@ -17,14 +17,14 @@ export const GadgetComments: FunctionComponent<Props &
     {comments.map(({ body, createdAt, user: { id, name } }, index) => (
       <div key={index} className="flex my-8 items-center">
         <img
-          className="hidden md:block mr-8 h-12 rounded-full"
+          className="hidden md:block mr-8 h-12 w-12 rounded-full"
           src={`https://api.adorable.io/avatars/200/${id}`}
           alt={name}
         />
         <div className="bg-gray-100 p-4 rounded">
           <header className="flex items-center mb-4">
             <img
-              className="md:hidden mr-2 h-8 rounded-full"
+              className="md:hidden mr-2 h-8 w-8 rounded-full"
               src={`https://api.adorable.io/avatars/200/${id}`}
               alt={name}
             />
