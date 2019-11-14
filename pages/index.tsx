@@ -1,16 +1,21 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, Header } from '../components'
 
-const Home: NextPage = () => (
+interface Props {
+  token: string
+}
+
+const Home: NextPage<Props> = ({ token }) => (
   <>
     <Head>
       <title>GadgetSwap</title>
     </Head>
 
-    <Header />
+    <Header loggedIn={!!token} />
 
     <main
       className="justify-center -z-2"
@@ -63,5 +68,13 @@ const Home: NextPage = () => (
     `}</style>
   </>
 )
+
+Home.getInitialProps = async context => {
+  const { token } = parseCookies(context)
+
+  return {
+    token
+  }
+}
 
 export default Home

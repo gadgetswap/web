@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import Cookies from 'js-cookie'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
@@ -7,7 +8,6 @@ import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
 
 import { Footer, FormMessage, Header, Spinner } from '../components'
-import { useAuth } from '../hooks'
 import { redirect } from '../lib'
 import { AuthResult, MutationLoginArgs } from '../types/graphql'
 
@@ -26,8 +26,6 @@ const LOGIN = gql`
 `
 
 const Login: NextPage = () => {
-  const auth = useAuth()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -38,7 +36,7 @@ const Login: NextPage = () => {
     MutationLoginArgs
   >(LOGIN, {
     onCompleted({ login: { token } }) {
-      auth.login(token)
+      Cookies.set('token', token)
 
       Router.push('/')
     },

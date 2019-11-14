@@ -39,7 +39,11 @@ const CREATE_GADGET = gql`
   }
 `
 
-const Create: NextPage = () => {
+interface Props {
+  token: string
+}
+
+const Create: NextPage<Props> = ({ token }) => {
   const [location, setLocation] = useState<Place>()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -90,7 +94,7 @@ const Create: NextPage = () => {
         <title>Post / GadgetSwap</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!token} />
 
       <main className="flex flex-col">
         <h1 className="text-5xl	font-semibold">Post gadget</h1>

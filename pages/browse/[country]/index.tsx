@@ -5,6 +5,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, Header, Spinner } from '../../../components'
@@ -20,7 +21,11 @@ const GET_LOCATIONS = gql`
   }
 `
 
-const BrowseCountry: NextPage = () => {
+interface Props {
+  token: string
+}
+
+const BrowseCountry: NextPage<Props> = ({ token }) => {
   const { query } = useRouter()
 
   const country = query.country as string
@@ -42,7 +47,7 @@ const BrowseCountry: NextPage = () => {
         <title>{country} / Browse / GadgetSwap</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!token} />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
@@ -82,6 +87,14 @@ const BrowseCountry: NextPage = () => {
       <Footer />
     </>
   )
+}
+
+BrowseCountry.getInitialProps = async context => {
+  const { token } = parseCookies(context)
+
+  return {
+    token
+  }
 }
 
 export default BrowseCountry

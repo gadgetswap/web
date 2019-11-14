@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, Header, Spinner } from '../../components'
@@ -13,7 +14,11 @@ const GET_COUNTRIES = gql`
   }
 `
 
-const Browse: NextPage = () => {
+interface Props {
+  token: string
+}
+
+const Browse: NextPage<Props> = ({ token }) => {
   const { data, loading } = useQuery<{
     countries: string[]
   }>(GET_COUNTRIES)
@@ -24,7 +29,7 @@ const Browse: NextPage = () => {
         <title>Browse / GadgetSwap</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!token} />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">Browse</h1>
@@ -48,6 +53,14 @@ const Browse: NextPage = () => {
       <Footer />
     </>
   )
+}
+
+Browse.getInitialProps = async context => {
+  const { token } = parseCookies(context)
+
+  return {
+    token
+  }
 }
 
 export default Browse

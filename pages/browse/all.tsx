@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import { Footer, GadgetPreview, Header, Spinner } from '../../components'
@@ -26,7 +27,11 @@ const GET_GADGETS = gql`
   }
 `
 
-const BrowseAll: NextPage = () => {
+interface Props {
+  token: string
+}
+
+const BrowseAll: NextPage<Props> = ({ token }) => {
   const { data, loading } = useQuery<
     {
       gadgets: Gadget[]
@@ -40,12 +45,12 @@ const BrowseAll: NextPage = () => {
         <title>Browse all / GadgetSwap</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!token} />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
           <Link href="/browse">
-            <a className="hover:text-gray-700">Browse</a>
+            <a className="hover:text-gray-700">Browse </a>
           </Link>
           / All
         </h1>
@@ -65,6 +70,14 @@ const BrowseAll: NextPage = () => {
       <Footer />
     </>
   )
+}
+
+BrowseAll.getInitialProps = async context => {
+  const { token } = parseCookies(context)
+
+  return {
+    token
+  }
 }
 
 export default BrowseAll

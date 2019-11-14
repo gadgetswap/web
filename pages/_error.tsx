@@ -7,15 +7,16 @@ import { Footer, Header } from '../components'
 
 interface Props {
   code: number
+  token: string
 }
 
-const Error: NextPage<Props> = ({ code }) => (
+const Error: NextPage<Props> = ({ code, token }) => (
   <>
     <Head>
       <title>{code} / GadgetSwap</title>
     </Head>
 
-    <Header />
+    <Header loggedIn={!!token} />
 
     <main>
       <h1 className="text-5xl font-semibold mb-8">{code}</h1>

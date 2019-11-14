@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import Cookies from 'js-cookie'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
@@ -7,7 +8,6 @@ import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
 
 import { Footer, FormMessage, Header, Spinner } from '../components'
-import { useAuth } from '../hooks'
 import { redirect } from '../lib'
 import { AuthResult, MutationRegisterArgs } from '../types/graphql'
 
@@ -26,8 +26,6 @@ const REGISTER = gql`
 `
 
 const Register: NextPage = () => {
-  const auth = useAuth()
-
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -39,7 +37,7 @@ const Register: NextPage = () => {
     MutationRegisterArgs
   >(REGISTER, {
     onCompleted({ register: { token } }) {
-      auth.login(token)
+      Cookies.set('token', token)
 
       Router.push('/')
     },

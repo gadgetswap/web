@@ -4,7 +4,6 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import App from 'next/app'
 import React from 'react'
 
-import { AuthProvider } from '../hooks'
 import { withApollo } from '../lib'
 
 class GadgetSwap extends App {
@@ -13,9 +12,7 @@ class GadgetSwap extends App {
 
     return (
       <ApolloProvider client={apollo}>
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <Component {...pageProps} />
       </ApolloProvider>
     )
   }

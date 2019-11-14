@@ -31,9 +31,10 @@ const GET_GADGETS = gql`
 
 interface Props {
   locationId: string
+  token: string
 }
 
-const BrowseCity: NextPage<Props> = ({ locationId }) => {
+const BrowseCity: NextPage<Props> = ({ locationId, token }) => {
   const {
     query: { city, country }
   } = useRouter()
@@ -57,7 +58,7 @@ const BrowseCity: NextPage<Props> = ({ locationId }) => {
         </title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!token} />
 
       <main>
         <h1 className="text-5xl font-semibold mb-8">
@@ -98,14 +99,15 @@ const BrowseCity: NextPage<Props> = ({ locationId }) => {
 }
 
 BrowseCity.getInitialProps = async context => {
-  const { locationId } = parseCookies(context)
+  const { locationId, token } = parseCookies(context)
 
   if (!locationId) {
     redirect(context, '/browse')
   }
 
   return {
-    locationId
+    locationId,
+    token
   }
 }
 

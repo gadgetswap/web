@@ -1,25 +1,17 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { destroyCookie } from 'nookies'
 
-import { useAuth } from '../hooks'
+import { redirect } from '../lib'
 
-const Logout: NextPage = () => {
-  const { logout } = useAuth()
-  const { replace } = useRouter()
-
-  useEffect(() => {
-    logout()
-
-    replace('/')
-  }, [])
-
-  return null
-}
+const Logout: NextPage = () => null
 
 Logout.getInitialProps = async context => {
   // @ts-ignore
   await context.apolloClient.resetStore()
+
+  destroyCookie(context, 'token')
+
+  redirect(context, '/')
 
   return {}
 }
