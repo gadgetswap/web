@@ -158,7 +158,7 @@ const Create: NextPage<Props> = ({ token }) => {
               <h3 className="text-3xl font-semibold mb-8">Images</h3>
               <ImagePicker
                 disabled={loading || uploading}
-                onChange={images => setImages(images)}
+                onAdd={next => setImages([...images, ...next])}
                 onRemove={index => {
                   const copy = [...images]
 

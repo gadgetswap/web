@@ -5,13 +5,13 @@ import { useDropzone } from 'react-dropzone'
 interface Props {
   disabled?: boolean
 
-  onChange: (images: File[]) => void
+  onAdd: (images: File[]) => void
   onRemove: (index: number) => void
 }
 
 export const ImagePicker: FunctionComponent<Props> = ({
   disabled,
-  onChange,
+  onAdd,
   onRemove
 }) => {
   const [errors, setErrors] = useState<string[]>([])
@@ -66,9 +66,9 @@ export const ImagePicker: FunctionComponent<Props> = ({
       setErrors(errors)
       setThumbs([...thumbs, ...next])
 
-      onChange(files)
+      onAdd(files)
     },
-    [errors, thumbs, setErrors, setThumbs, onChange]
+    [errors, thumbs, setErrors, setThumbs, onAdd]
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
