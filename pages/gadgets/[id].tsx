@@ -119,46 +119,41 @@ const GadgetById: NextPage<Props> = ({ token }) => {
     }
   })
 
-  if (
-    gadgetQuery.loading ||
-    !gadgetQuery.data ||
-    commentsQuery.loading ||
-    !commentsQuery.data
-  ) {
-    return <Spinner />
-  }
-
-  const {
-    data: { gadget }
-  } = gadgetQuery
-
-  const {
-    data: { gadgetComments }
-  } = commentsQuery
-
   return (
     <>
       <Head>
-        <title>{gadget.title} / GadgetSwap</title>
+        <title>
+          {gadgetQuery.data ? gadgetQuery.data.gadget.title : 'Loading'} /
+          GadgetSwap
+        </title>
       </Head>
 
       <Header loggedIn={!!token} />
 
       <main>
-        <GadgetDetails gadget={gadget} />
-        <GadgetComments className="mt-8" comments={gadgetComments} />
-        <CommentForm
-          loading={createCommentMutation.loading || commentsQuery.loading}
-          loggedIn={!!token}
-          onReply={body =>
-            createComment({
-              variables: {
-                body,
-                gadgetId
-              }
-            })
-          }
-        />
+        {gadgetQuery.loading && <Spinner />}
+        {gadgetQuery.data && <GadgetDetails gadget={gadgetQuery.data.gadget} />}
+        {commentsQuery.loading && <Spinner />}
+        {commentsQuery.data && (
+          <GadgetComments
+            className="mt-8"
+            comments={commentsQuery.data.gadgetComments}
+          />
+        )}
+        {gadgetQuery.data && gadgetQuery.loading && (
+          <CommentForm
+            loading={createCommentMutation.loading || commentsQuery.loading}
+            loggedIn={!!token}
+            onReply={body =>
+              createComment({
+                variables: {
+                  body,
+                  gadgetId
+                }
+              })
+            }
+          />
+        )}
       </main>
 
       <Footer />
