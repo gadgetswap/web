@@ -11,8 +11,8 @@ module.exports = {
       },
       flex: {
         'gadget-1': '1 0 calc(100% - 2em)',
-        'gadget-2': '1 0 calc(50% - 2em)',
-        'gadget-3': '1 0 calc(100% / 3 - 2em)'
+        'gadget-2': '0 0 calc(50% - 2em)',
+        'gadget-3': '0 0 calc(100% / 3 - 2em)'
       },
       fontFamily: {
         sans: ['Inter var']
