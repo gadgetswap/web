@@ -22,7 +22,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
         </a>
       </Link>
       <a
-        className="fixed top-0 right-0 lg:hidden z-20"
+        className="absolute top-0 right-0 lg:hidden z-20"
         href="#menu"
         onClick={event => {
           event.preventDefault()
@@ -42,6 +42,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
           'flex-col',
           'inset-0',
           'justify-center',
+          'overflow-y-auto',
           'right-0',
           'top-0',
           'z-10',
