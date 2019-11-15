@@ -23,24 +23,32 @@ const Home: NextPage<Props> = ({ token }) => (
         margin: 0
       }}>
       <section className="flex items-center justify-center flex-col my-8 px-8 py-32 relative">
-        <h2 className="text-5xl font-semibold ">What is GadgetSwap?</h2>
-        <p className="mt-4">
+        <h2 className="text-5xl font-semibold text-center">
+          What is GadgetSwap?
+        </h2>
+        <p className="mt-4 text-center">
           Ever got greedy and bought too many gadgets you didn&apos;t need?
         </p>
-        <p className="mt-4">
+        <p className="mt-4 text-center">
           Still want more but don&apos;t know what to do with the ones you have?
         </p>
-        <p className="mt-4">Swap gadgets with other people using GadgetSwap!</p>
+        <p className="mt-4 text-center">
+          Swap gadgets with other people using GadgetSwap!
+        </p>
       </section>
       <section className="flex items-center justify-center flex-col my-8 px-8 py-32 relative">
-        <h2 className="text-5xl font-semibold ">How does it work?</h2>
-        <p className="mt-4">
+        <h2 className="text-5xl font-semibold text-center">
+          How does it work?
+        </h2>
+        <p className="mt-4 text-center">
           Post your gadget with photos and wait for someone to request it.
         </p>
-        <p className="mt-4">
+        <p className="mt-4 text-center">
           Or find something you like to and request the owner to swap with you.
         </p>
-        <p className="mt-4">If both of you agree, that&apos;s it!</p>
+        <p className="mt-4 text-center">
+          If both of you agree, that&apos;s it!
+        </p>
       </section>
     </main>
 
