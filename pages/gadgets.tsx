@@ -81,76 +81,83 @@ const Gadgets: NextPage<Props> = ({ token }) => {
         <h1 className="text-5xl font-semibold mb-8">Your gadgets</h1>
         {loading && <Spinner />}
         {data && (
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Posted</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {data.gadgetsByUser.map(
-                ({ createdAt, id, status, title }, index) => (
-                  <tr key={index}>
-                    <td>{title}</td>
-                    <td>
-                      <span
-                        className={clsx(
-                          'font-semibold',
-                          'px-4',
-                          'py-2',
-                          'rounded-full',
-                          'text-sm',
-                          'text-white',
+          <section className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Posted</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {data.gadgetsByUser.map(
+                  ({ createdAt, id, status, title }, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-no-wrap md:whitespace-normal">
+                        {title}
+                      </td>
+                      <td>
+                        <span
+                          className={clsx(
+                            'font-semibold',
+                            'px-4',
+                            'py-2',
+                            'rounded-full',
+                            'text-sm',
+                            'text-white',
 
-                          status === GadgetStatus.Available
-                            ? 'bg-green-500'
-                            : 'bg-red-500'
-                        )}>
-                        {status}
-                      </span>
-                    </td>
-                    <td title={moment(createdAt).format('LLLL')}>
-                      {moment(createdAt).fromNow()}
-                    </td>
-                    <td>
-                      {deleting.get(id) && <Spinner />}
-                      {!deleting.get(id) && status === GadgetStatus.Available && (
-                        <a
-                          className="text-red-500"
-                          href="#delete"
-                          onClick={async event => {
-                            event.preventDefault()
+                            status === GadgetStatus.Available
+                              ? 'bg-green-500'
+                              : 'bg-red-500'
+                          )}>
+                          {status}
+                        </span>
+                      </td>
+                      <td
+                        className="whitespace-no-wrap md:whitespace-normal"
+                        title={moment(createdAt).format('LLLL')}>
+                        {moment(createdAt).fromNow()}
+                      </td>
+                      <td className="text-right">
+                        {deleting.get(id) && <Spinner />}
+                        {!deleting.get(id) &&
+                          status === GadgetStatus.Available && (
+                            <a
+                              className="text-red-500"
+                              href="#delete"
+                              onClick={async event => {
+                                event.preventDefault()
 
-                            const yes = window.confirm(
-                              `Are you sure you want to delete ${title}?`
-                            )
+                                const yes = window.confirm(
+                                  `Are you sure you want to delete ${title}?`
+                                )
 
-                            if (yes) {
-                              try {
-                                updateLoading(id, true)
+                                if (yes) {
+                                  try {
+                                    updateLoading(id, true)
 
-                                await deleteGadget({
-                                  variables: {
-                                    gadgetId: id
+                                    await deleteGadget({
+                                      variables: {
+                                        gadgetId: id
+                                      }
+                                    })
+                                  } finally {
+                                    updateLoading(id, false)
                                   }
-                                })
-                              } finally {
-                                updateLoading(id, false)
-                              }
-                            }
-                          }}>
-                          Delete
-                        </a>
-                      )}
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+                                }
+                              }}>
+                              Delete
+                            </a>
+                          )}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </section>
         )}
       </main>
 
