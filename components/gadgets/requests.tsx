@@ -92,11 +92,11 @@ export const GadgetRequests: FunctionComponent<Props> = ({
               {!isPending && (
                 <div
                   className={clsx(
-                    'mt-4',
                     'font-semibold',
                     'inline-block',
-                    'py-1',
+                    'mt-4',
                     'px-2',
+                    'py-1',
                     'rounded-full',
                     'text-white',
                     'text-xs',
@@ -133,13 +133,13 @@ export const GadgetRequests: FunctionComponent<Props> = ({
                 {!isDenied && (
                   <button
                     className={clsx(
+                      'bg-red-500',
                       'flex-1',
                       'justify-center',
+                      'lg:ml-8',
                       'px-4',
                       'py-2',
                       'rounded-full',
-                      'lg:ml-8',
-                      'bg-red-500',
 
                       isPending && 'ml-8'
                     )}
