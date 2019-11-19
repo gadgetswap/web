@@ -34,6 +34,10 @@ const GET_GADGET = gql`
       quantity
       status
       title
+      user {
+        id
+        name
+      }
       createdAt
     }
   }

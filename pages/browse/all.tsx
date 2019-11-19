@@ -22,6 +22,10 @@ const GET_GADGETS = gql`
       quantity
       status
       title
+      user {
+        id
+        name
+      }
       createdAt
     }
   }
