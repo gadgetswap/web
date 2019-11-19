@@ -25,8 +25,8 @@ export const ImagePicker: FunctionComponent<Props> = ({
 
       setErrors([])
 
-      const errors = []
-      const next = []
+      const errors: string[] = []
+      const next: string[] = []
 
       await Promise.all(
         files.map(
@@ -53,7 +53,7 @@ export const ImagePicker: FunctionComponent<Props> = ({
               reader.onerror = () => reject()
 
               reader.onload = () => {
-                next.push(reader.result)
+                next.push(reader.result as string)
 
                 resolve()
               }

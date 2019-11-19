@@ -47,7 +47,7 @@ Error.getInitialProps = async context => {
 
   const { err, res } = context
 
-  const code = res ? res.statusCode : err ? err.statusCode : 404
+  const code = res ? res.statusCode : err ? err.statusCode || 500 : 404
 
   return {
     code,

@@ -9,7 +9,7 @@ class Places {
   fuse = new Fuse(
     (cities as City[]).map((city: City) => ({
       ...city,
-      country: getName(city.country)
+      country: getName(city.country) as string
     })),
     {
       keys: ['country', 'name']

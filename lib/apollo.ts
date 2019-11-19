@@ -8,7 +8,7 @@ export default withApollo(
     new ApolloClient({
       cache: new InMemoryCache().restore(initialState || {}),
       request(operation) {
-        let token: string
+        let token: string | undefined
 
         if (process.browser) {
           token = Cookies.get('token')

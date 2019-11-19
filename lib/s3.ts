@@ -6,7 +6,7 @@ class S3 {
     aws.config.region = process.env.AWS_REGION
 
     aws.config.credentials = new aws.CognitoIdentityCredentials({
-      IdentityPoolId: process.env.AWS_IDENTITY_POOL
+      IdentityPoolId: process.env.AWS_IDENTITY_POOL as string
     })
   }
 
@@ -15,7 +15,7 @@ class S3 {
       params: {
         ACL: 'public-read',
         Body: file,
-        Bucket: process.env.AWS_S3_BUCKET,
+        Bucket: process.env.AWS_S3_BUCKET as string,
         ContentType: file.type,
         Key: path
       }

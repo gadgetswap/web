@@ -54,7 +54,7 @@ const Create: NextPage<Props> = ({ token }) => {
   })
 
   const create = async () => {
-    if (!title || !description) {
+    if (!location || !title || !description) {
       return
     }
 
@@ -70,7 +70,7 @@ const Create: NextPage<Props> = ({ token }) => {
       variables: {
         data: {
           description,
-          images: urls.map(url => url.split('/').pop()),
+          images: urls.map(url => url.split('/').pop() as string),
           quantity,
           title
         },
