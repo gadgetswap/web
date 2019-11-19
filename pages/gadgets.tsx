@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import moment from 'moment'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
 
@@ -102,7 +103,9 @@ const Gadgets: NextPage<Props> = ({ token }) => {
                     ({ createdAt, id, status, title }, index) => (
                       <tr key={index}>
                         <td className="whitespace-no-wrap md:whitespace-normal">
-                          {title}
+                          <Link href={`/gadgets/${id}`}>
+                            <a className="text-blue-500">{title}</a>
+                          </Link>
                         </td>
                         <td>
                           <span
