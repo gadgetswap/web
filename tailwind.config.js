@@ -15,7 +15,17 @@ module.exports = {
         'gadget-2': '0 0 calc(50% - 2em)'
       },
       fontFamily: {
-        sans: ['Inter var']
+        sans: [
+          'Inter var',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+          'Apple Color Emoji',
+          'Segoe UI Emoji'
+        ]
       },
       width: {
         100: '20rem'
