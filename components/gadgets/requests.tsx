@@ -1,9 +1,10 @@
 import { ExecutionResult } from 'apollo-boost'
+import clsx from 'clsx'
 import moment from 'moment'
 import Link from 'next/link'
 import React, { FunctionComponent, useState } from 'react'
 
-import { Gadget, GadgetRequestStatus } from '../../types/graphql'
+import { Gadget, GadgetRequestStatus, GadgetStatus } from '../../types/graphql'
 import { Spinner } from '../spinner'
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export const GadgetRequests: FunctionComponent<Props> = ({
-  gadget: { id, requests, title },
+  gadget: { id, requests, status, title },
   onUpdate
 }) => {
   const [loading, setLoading] = useState<Map<string, boolean>>(new Map())
@@ -51,69 +52,116 @@ export const GadgetRequests: FunctionComponent<Props> = ({
       {requests.length === 0 && (
         <p className="text-orange-500 mt-4">No requests</p>
       )}
-      {requests.map(({ createdAt, description, id, status, user }, index) => (
-        <div
-          key={index}
-          className="flex my-8 flex-col lg:flex-row lg:items-center">
-          <img
-            alt={user.name}
-            className="hidden md:block mr-8 h-12 w-12 rounded-full"
-            src={`https://api.adorable.io/avatars/200/${user.id}`}
-          />
-          <div className="flex-1 bg-gray-100 p-4 rounded">
-            <header className="flex items-center mb-4">
-              <img
-                alt={user.name}
-                className="md:hidden mr-2 h-8 w-8 rounded-full"
-                src={`https://api.adorable.io/avatars/200/${user.id}`}
-              />
-              <h4 className="font-semibold">{user.name}</h4>
-              <span className="text-gray-600 text-sm ml-2">
-                {moment(createdAt).fromNow()}
-              </span>
-            </header>
-            {status}
-            {description
-              .split('\n')
-              .map(description => description.trim())
-              .filter(Boolean)
-              .map((description, index) => (
-                <p key={index} className="mt-2">
-                  {description}
-                </p>
-              ))}
-          </div>
-          {loading.get(id) && (
-            <Spinner className="mt-8 self-center lg:mt-0 lg:ml-8" />
-          )}
-          {!loading.get(id) && (
-            <div className="flex justify-between mt-8 lg:mt-0">
-              <button
-                className="flex- justify-center px-6 py-2 rounded-full lg:ml-8 bg-green-500"
-                onClick={async () => {
-                  updateLoading(id, true)
+      {requests.map((request, index) => {
+        const isApproved = request.status === GadgetRequestStatus.Approved
+        const isDenied = request.status === GadgetRequestStatus.Denied
+        const isPending = request.status === GadgetRequestStatus.Pending
 
-                  await onUpdate(gadgetId, id, GadgetRequestStatus.Approved)
+        return (
+          <div
+            key={index}
+            className="flex my-8 flex-col lg:flex-row lg:items-center">
+            <img
+              alt={request.user.name}
+              className="hidden lg:block mr-8 h-12 w-12 rounded-full"
+              src={`https://api.adorable.io/avatars/200/${request.user.id}`}
+            />
+            <div className="flex-1">
+              <header className="flex items-center mb-4">
+                <img
+                  alt={request.user.name}
+                  className="lg:hidden mr-2 h-8 w-8 rounded-full"
+                  src={`https://api.adorable.io/avatars/200/${request.user.id}`}
+                />
+                <h4 className="font-semibold">{request.user.name}</h4>
+                <span className="text-gray-600 text-sm ml-2">
+                  {moment(request.createdAt).fromNow()}
+                </span>
+              </header>
+              <div className="bg-gray-100 px-4 py-2 rounded-lg">
+                {request.description
+                  .split('\n')
+                  .map(description => description.trim())
+                  .filter(Boolean)
+                  .map((description, index) => (
+                    <p key={index} className="my-2">
+                      {description}
+                    </p>
+                  ))}
+              </div>
+              {!isPending && (
+                <div
+                  className={clsx(
+                    'mt-4',
+                    'font-semibold',
+                    'inline-block',
+                    'py-1',
+                    'px-2',
+                    'rounded-full',
+                    'text-white',
+                    'text-xs',
 
-                  updateLoading(id, false)
-                }}>
-                Approve
-              </button>
-              <button
-                className="flex- justify-center px-4 py-2 rounded-full ml-8 lg:ml-8 bg-red-500"
-                onClick={async () => {
-                  updateLoading(id, true)
-
-                  await onUpdate(gadgetId, id, GadgetRequestStatus.Denied)
-
-                  updateLoading(id, false)
-                }}>
-                Ignore
-              </button>
+                    isApproved && 'bg-green-500',
+                    isDenied && 'bg-red-500'
+                  )}>
+                  {request.status}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      ))}
+            {loading.get(request.id) && (
+              <Spinner className="mt-8 self-center lg:mt-0 lg:ml-8" />
+            )}
+            {!loading.get(request.id) && (
+              <div className="flex mt-8 lg:mt-0">
+                {!isApproved && status === GadgetStatus.Available && (
+                  <button
+                    className="flex-1 justify-center px-6 py-2 rounded-full lg:ml-8 bg-green-500"
+                    onClick={async () => {
+                      updateLoading(request.id, true)
+
+                      await onUpdate(
+                        gadgetId,
+                        request.id,
+                        GadgetRequestStatus.Approved
+                      )
+
+                      updateLoading(request.id, false)
+                    }}>
+                    Approve
+                  </button>
+                )}
+                {!isDenied && (
+                  <button
+                    className={clsx(
+                      'flex-1',
+                      'justify-center',
+                      'px-4',
+                      'py-2',
+                      'rounded-full',
+                      'lg:ml-8',
+                      'bg-red-500',
+
+                      isPending && 'ml-8'
+                    )}
+                    onClick={async () => {
+                      updateLoading(request.id, true)
+
+                      await onUpdate(
+                        gadgetId,
+                        request.id,
+                        GadgetRequestStatus.Denied
+                      )
+
+                      updateLoading(request.id, false)
+                    }}>
+                    {isApproved ? 'Cancel' : 'Ignore'}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }

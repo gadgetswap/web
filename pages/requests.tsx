@@ -13,6 +13,7 @@ const GET_GADGETS = gql`
   query gadgets {
     gadgets {
       id
+      status
       title
       requests {
         id
@@ -72,7 +73,7 @@ const Requests: NextPage<Props> = ({ token }) => {
 
       <main>
         <h1 className="text-5xl font-semibold">Requests</h1>
-        {loading && <Spinner />}
+        {loading && <Spinner className="mt-8" />}
         {data && (
           <section>
             {data.gadgets.length === 0 && (
