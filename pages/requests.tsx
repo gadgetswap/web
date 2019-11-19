@@ -77,7 +77,7 @@ const Requests: NextPage<Props> = ({ token }) => {
         {data && (
           <section>
             {data.gadgets.length === 0 && (
-              <div className="text-red-500 my-4">
+              <div className="text-red-500 mt-8">
                 You haven&apos;t posted any gadgets yet.
               </div>
             )}
@@ -85,7 +85,7 @@ const Requests: NextPage<Props> = ({ token }) => {
               (total, gadget) => (total += gadget.requests.length),
               0
             ) === 0 && (
-              <div className="text-red-500 my-4">
+              <div className="text-red-500 mt-8">
                 No one has requested your gadgets yet.
               </div>
             )}
