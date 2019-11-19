@@ -86,7 +86,12 @@ export const GadgetDetails: FunctionComponent<Props &
         </div>
       </div>
 
-      <Modal visible={visible} onClose={() => setVisible(false)}>
+      <Modal
+        visible={visible}
+        onClose={() => {
+          setRequested(false)
+          setVisible(false)
+        }}>
         <header className="flex items-stretch justify-between bg-accent">
           <h2 className="text-primary font-semibold text-xl m-8">{title}</h2>
           <a className="flex items-center justify-center px-8" href="#close">
