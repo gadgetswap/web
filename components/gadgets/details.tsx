@@ -1,4 +1,5 @@
 import { ExecutionResult } from 'apollo-boost'
+import clsx from 'clsx'
 import Link from 'next/link'
 import React, { FunctionComponent, HTMLAttributes, useState } from 'react'
 
@@ -53,7 +54,17 @@ export const GadgetDetails: FunctionComponent<Props &
               Request
             </button>
           )}
-          <span className="font-medium bg-accent px-4 py-2 rounded-full">
+          <span
+            className={clsx(
+              'font-medium',
+              'px-4',
+              'py-2',
+              'rounded-full',
+
+              status === GadgetStatus.Available
+                ? 'bg-accent'
+                : 'bg-orange-500 text-white'
+            )}>
             {status === GadgetStatus.Available
               ? `${quantity} available`
               : 'Not available'}
