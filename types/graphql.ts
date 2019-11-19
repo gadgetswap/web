@@ -54,6 +54,7 @@ export type Gadget = {
   user: User,
   createdAt: Scalars['DateTime'],
   updatedAt: Scalars['DateTime'],
+  requests: Array<GadgetRequest>,
   isRequested: Scalars['Boolean'],
 };
 
@@ -92,7 +93,7 @@ export type Mutation = {
   createComment: Comment,
   createGadget: Gadget,
   createLocation: Location,
-  requestGadget: GadgetRequest,
+  createRequest: GadgetRequest,
   updateRequest: Scalars['Boolean'],
   login: AuthResult,
   register: AuthResult,
@@ -116,7 +117,7 @@ export type MutationCreateLocationArgs = {
 };
 
 
-export type MutationRequestGadgetArgs = {
+export type MutationCreateRequestArgs = {
   description: Scalars['String'],
   gadgetId: Scalars['ID']
 };
@@ -148,8 +149,6 @@ export type Query = {
   gadget: Gadget,
   countries: Array<Scalars['String']>,
   locations: Array<Location>,
-  requests: Array<GadgetRequest>,
-  gadgetRequests: Array<GadgetRequest>,
   profile: User,
 };
 
@@ -171,11 +170,6 @@ export type QueryGadgetArgs = {
 
 export type QueryLocationsArgs = {
   country: Scalars['String']
-};
-
-
-export type QueryGadgetRequestsArgs = {
-  gadgetId: Scalars['ID']
 };
 
 export type User = {

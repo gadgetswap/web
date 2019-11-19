@@ -19,7 +19,7 @@ import {
   Gadget,
   GadgetRequest,
   MutationCreateCommentArgs,
-  MutationRequestGadgetArgs,
+  MutationCreateRequestArgs,
   QueryGadgetArgs
 } from '../../types/graphql'
 
@@ -69,8 +69,8 @@ const CREATE_COMMENT = gql`
 `
 
 const REQUEST_GADGET = gql`
-  mutation requestGadget($gadgetId: ID!, $description: String!) {
-    requestGadget(gadgetId: $gadgetId, description: $description) {
+  mutation createRequest($gadgetId: ID!, $description: String!) {
+    createRequest(gadgetId: $gadgetId, description: $description) {
       id
     }
   }
@@ -129,11 +129,11 @@ const GadgetById: NextPage<Props> = ({ token, userId }) => {
     }
   })
 
-  const [requestGadget] = useMutation<
+  const [createRequest] = useMutation<
     {
-      requestGadget: GadgetRequest
+      createRequest: GadgetRequest
     },
-    MutationRequestGadgetArgs
+    MutationCreateRequestArgs
   >(REQUEST_GADGET, {
     awaitRefetchQueries: true,
     refetchQueries() {
@@ -168,7 +168,7 @@ const GadgetById: NextPage<Props> = ({ token, userId }) => {
             gadget={gadgetQuery.data.gadget}
             userId={userId}
             onRequest={description =>
-              requestGadget({
+              createRequest({
                 variables: {
                   description,
                   gadgetId
