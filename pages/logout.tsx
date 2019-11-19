@@ -10,6 +10,7 @@ Logout.getInitialProps = async context => {
   await context.apolloClient.resetStore()
 
   destroyCookie(context, 'token')
+  destroyCookie(context, 'userId')
 
   redirect(context, '/')
 

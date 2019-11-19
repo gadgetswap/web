@@ -36,8 +36,14 @@ const Register: NextPage = () => {
     },
     MutationRegisterArgs
   >(REGISTER, {
-    onCompleted({ register: { token } }) {
+    onCompleted({
+      register: {
+        token,
+        user: { id }
+      }
+    }) {
       Cookies.set('token', token)
+      Cookies.set('userId', id)
 
       Router.push('/')
     },

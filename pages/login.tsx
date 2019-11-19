@@ -35,8 +35,14 @@ const Login: NextPage = () => {
     },
     MutationLoginArgs
   >(LOGIN, {
-    onCompleted({ login: { token } }) {
+    onCompleted({
+      login: {
+        token,
+        user: { id }
+      }
+    }) {
       Cookies.set('token', token)
+      Cookies.set('userId', id)
 
       Router.push('/')
     },
