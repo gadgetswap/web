@@ -90,12 +90,11 @@ export const ImagePicker: FunctionComponent<Props> = ({
 
                 onRemove(index)
               }}>
-              <img className="h-32" src={thumb} />
+              <img className="h-24" src={thumb} />
             </figure>
           ))}
         </div>
       )}
-
       <div
         className={clsx(
           'rounded',
