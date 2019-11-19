@@ -63,7 +63,7 @@ export const GadgetDetails: FunctionComponent<Props &
 
               status === GadgetStatus.Available
                 ? 'bg-accent'
-                : 'bg-orange-500 text-white'
+                : 'bg-red-500 text-white'
             )}>
             {status === GadgetStatus.Available
               ? `${quantity} available`

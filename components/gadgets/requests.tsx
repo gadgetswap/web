@@ -50,7 +50,7 @@ export const GadgetRequests: FunctionComponent<Props> = ({
         </Link>
       </header>
       {requests.length === 0 && (
-        <p className="text-orange-500 mt-4">No requests</p>
+        <p className="text-red-500 mt-4">No requests</p>
       )}
       {requests.map((request, index) => {
         const isApproved = request.status === GadgetRequestStatus.Approved
