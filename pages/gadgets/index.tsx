@@ -8,13 +8,13 @@ import Link from 'next/link'
 import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
 
-import { Footer, Header, Spinner } from '../components'
-import { redirect } from '../lib'
+import { Footer, Header, Spinner } from '../../components'
+import { redirect } from '../../lib'
 import {
   Gadget,
   GadgetStatus,
   MutationDeleteGadgetArgs
-} from '../types/graphql'
+} from '../../types/graphql'
 
 const GET_GADGETS = gql`
   query gadgetsByUser {
