@@ -164,24 +164,27 @@ const GadgetById: NextPage<Props> = ({ token, userId }) => {
           <Spinner className="mb-8" />
         )}
         {gadgetQuery.data && (
-          <GadgetDetails
-            gadget={gadgetQuery.data.gadget}
-            userId={userId}
-            onRequest={description =>
-              createRequest({
-                variables: {
-                  description,
-                  gadgetId
-                }
-              })
-            }
-          />
-        )}
-        {commentsQuery.data && (
-          <GadgetComments
-            className="mt-8"
-            comments={commentsQuery.data.gadgetComments}
-          />
+          <>
+            <GadgetDetails
+              gadget={gadgetQuery.data.gadget}
+              userId={userId}
+              onRequest={description =>
+                createRequest({
+                  variables: {
+                    description,
+                    gadgetId
+                  }
+                })
+              }
+            />
+            {commentsQuery.data && (
+              <GadgetComments
+                className="mt-8"
+                comments={commentsQuery.data.gadgetComments}
+                gadget={gadgetQuery.data.gadget}
+              />
+            )}
+          </>
         )}
         {gadgetQuery.data && commentsQuery.data && (
           <CommentForm

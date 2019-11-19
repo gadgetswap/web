@@ -1,14 +1,16 @@
 import moment from 'moment'
 import React, { FunctionComponent, HTMLAttributes } from 'react'
 
-import { Comment } from '../../types/graphql'
+import { img_crown } from '../../assets'
+import { Comment, Gadget } from '../../types/graphql'
 
 interface Props {
   comments: Comment[]
+  gadget: Gadget
 }
 
 export const GadgetComments: FunctionComponent<Props &
-  HTMLAttributes<HTMLDivElement>> = ({ className, comments }) => (
+  HTMLAttributes<HTMLDivElement>> = ({ className, comments, gadget }) => (
   <div className={className}>
     <h2 className="text-4xl font-semibold">Comments</h2>
     {comments.length === 0 && (
@@ -29,6 +31,9 @@ export const GadgetComments: FunctionComponent<Props &
               alt={name}
             />
             <h4 className="font-semibold">{name}</h4>
+            {gadget.user.id === id && (
+              <img className="ml-2 h-4 w-4" src={img_crown} />
+            )}
             <span className="text-gray-600 text-sm ml-2">
               {moment(createdAt).fromNow()}
             </span>
