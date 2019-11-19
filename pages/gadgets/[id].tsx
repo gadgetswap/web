@@ -17,7 +17,9 @@ import {
 import {
   Comment,
   Gadget,
+  GadgetRequest,
   MutationCreateCommentArgs,
+  MutationRequestGadgetArgs,
   QueryGadgetArgs
 } from '../../types/graphql'
 
@@ -32,6 +34,7 @@ const GET_GADGET = gql`
         country
       }
       quantity
+      isRequested
       status
       title
       user {
@@ -61,21 +64,24 @@ const CREATE_COMMENT = gql`
   mutation createComment($body: String!, $gadgetId: ID!) {
     createComment(body: $body, gadgetId: $gadgetId) {
       id
-      body
-      user {
-        id
-        name
-      }
-      createdAt
+    }
+  }
+`
+
+const REQUEST_GADGET = gql`
+  mutation requestGadget($gadgetId: ID!, $description: String!) {
+    requestGadget(gadgetId: $gadgetId, description: $description) {
+      id
     }
   }
 `
 
 interface Props {
   token: string
+  userId: string
 }
 
-const GadgetById: NextPage<Props> = ({ token }) => {
+const GadgetById: NextPage<Props> = ({ token, userId }) => {
   const {
     query: { id }
   } = useRouter()
@@ -123,6 +129,25 @@ const GadgetById: NextPage<Props> = ({ token }) => {
     }
   })
 
+  const [requestGadget] = useMutation<
+    {
+      requestGadget: GadgetRequest
+    },
+    MutationRequestGadgetArgs
+  >(REQUEST_GADGET, {
+    awaitRefetchQueries: true,
+    refetchQueries() {
+      return [
+        {
+          query: GET_GADGET,
+          variables: {
+            gadgetId
+          }
+        }
+      ]
+    }
+  })
+
   return (
     <>
       <Head>
@@ -138,7 +163,20 @@ const GadgetById: NextPage<Props> = ({ token }) => {
         {(gadgetQuery.loading || commentsQuery.loading) && (
           <Spinner className="mb-8" />
         )}
-        {gadgetQuery.data && <GadgetDetails gadget={gadgetQuery.data.gadget} />}
+        {gadgetQuery.data && (
+          <GadgetDetails
+            gadget={gadgetQuery.data.gadget}
+            userId={userId}
+            onRequest={description =>
+              requestGadget({
+                variables: {
+                  description,
+                  gadgetId
+                }
+              })
+            }
+          />
+        )}
         {commentsQuery.data && (
           <GadgetComments
             className="mt-8"
@@ -167,10 +205,11 @@ const GadgetById: NextPage<Props> = ({ token }) => {
 }
 
 GadgetById.getInitialProps = async context => {
-  const { token } = parseCookies(context)
+  const { token, userId } = parseCookies(context)
 
   return {
-    token
+    token,
+    userId
   }
 }
 

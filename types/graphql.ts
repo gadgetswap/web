@@ -51,10 +51,10 @@ export type Gadget = {
   quantity: Scalars['Float'],
   status: GadgetStatus,
   comments: Array<Comment>,
-  requests: Array<GadgetRequest>,
   user: User,
   createdAt: Scalars['DateTime'],
   updatedAt: Scalars['DateTime'],
+  isRequested: Scalars['Boolean'],
 };
 
 export type GadgetRequest = {
