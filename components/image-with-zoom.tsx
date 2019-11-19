@@ -1,10 +1,7 @@
 import clsx from 'clsx'
-import React, {
-  FunctionComponent,
-  HTMLAttributes,
-  useEffect,
-  useState
-} from 'react'
+import React, { FunctionComponent, HTMLAttributes, useState } from 'react'
+
+import { Modal } from './modal'
 
 interface Props {
   source: string
@@ -12,63 +9,24 @@ interface Props {
 
 export const ImageWithZoom: FunctionComponent<Props &
   HTMLAttributes<HTMLImageElement>> = ({ className, source, title }) => {
-  const [open, setOpen] = useState(false)
-
-  const listener = (event: KeyboardEvent) => {
-    if (event.keyCode === 27) {
-      setOpen(false)
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('keyup', listener)
-
-    return () => document.removeEventListener('keyup', listener)
-  }, [])
+  const [visible, setVisible] = useState(false)
 
   return (
     <>
       <img
-        className={clsx(className, 'cursor-pointer')}
-        src={source}
         alt={title}
-        onClick={() => setOpen(true)}
+        className={clsx(className, 'cursor-pointer')}
+        onClick={() => setVisible(true)}
+        src={source}
       />
-      <div
-        className={clsx(
-          'bg-modal',
-          'fixed',
-          'flex',
-          'inset-0',
-          'items-center',
-          'justify-center',
-          'p-8',
-          'z-30',
-
-          'lg:p-20',
-
-          open && 'open'
-        )}
-        onClick={() => setOpen(false)}>
+      <Modal onClose={() => setVisible(false)} visible={visible}>
         <img
-          className="cursor-pointer rounded shadow-xl max-h-full max-w-full"
-          src={source}
           alt={title}
+          className="cursor-pointer rounded shadow-xl max-h-full max-w-full"
+          onClick={() => setVisible(false)}
+          src={source}
         />
-      </div>
-
-      <style jsx>{`
-        .bg-modal {
-          opacity: 0;
-          transition: 0.2s linear;
-          visibility: hidden;
-        }
-
-        .bg-modal.open {
-          visibility: visible;
-          opacity: 1;
-        }
-      `}</style>
+      </Modal>
     </>
   )
 }
