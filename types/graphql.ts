@@ -91,9 +91,9 @@ export type Mutation = {
    __typename?: 'Mutation',
   createComment: Comment,
   createGadget: Gadget,
+  createLocation: Location,
   requestGadget: GadgetRequest,
   updateRequest: Scalars['Boolean'],
-  createLocation: Location,
   login: AuthResult,
   register: AuthResult,
 };
@@ -111,6 +111,11 @@ export type MutationCreateGadgetArgs = {
 };
 
 
+export type MutationCreateLocationArgs = {
+  data: CreateLocationInput
+};
+
+
 export type MutationRequestGadgetArgs = {
   description: Scalars['String'],
   gadgetId: Scalars['ID']
@@ -121,11 +126,6 @@ export type MutationUpdateRequestArgs = {
   gadgetId: Scalars['ID'],
   requestId: Scalars['ID'],
   status: GadgetRequestStatus
-};
-
-
-export type MutationCreateLocationArgs = {
-  data: CreateLocationInput
 };
 
 
@@ -146,9 +146,10 @@ export type Query = {
   gadgetComments: Array<Comment>,
   gadgets: Array<Gadget>,
   gadget: Gadget,
-  gadgetRequests: Array<GadgetRequest>,
   countries: Array<Scalars['String']>,
   locations: Array<Location>,
+  requests: Array<GadgetRequest>,
+  gadgetRequests: Array<GadgetRequest>,
   profile: User,
 };
 
@@ -168,13 +169,13 @@ export type QueryGadgetArgs = {
 };
 
 
-export type QueryGadgetRequestsArgs = {
-  gadgetId: Scalars['ID']
+export type QueryLocationsArgs = {
+  country: Scalars['String']
 };
 
 
-export type QueryLocationsArgs = {
-  country: Scalars['String']
+export type QueryGadgetRequestsArgs = {
+  gadgetId: Scalars['ID']
 };
 
 export type User = {
