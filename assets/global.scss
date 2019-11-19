@@ -69,6 +69,29 @@ textarea {
   min-height: 8em;
 }
 
+table {
+  thead {
+    tr {
+      @apply border-b border-gray-300;
+    }
+  }
+
+  tbody {
+    tr {
+      @apply border-t border-gray-200;
+    }
+  }
+
+  td,
+  th {
+    @apply align-middle text-left p-4;
+  }
+
+  th {
+    @apply font-semibold;
+  }
+}
+
 // layout
 
 #__next {

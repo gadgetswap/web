@@ -92,6 +92,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   createComment: Comment,
   createGadget: Gadget,
+  deleteGadget: Scalars['Boolean'],
   createLocation: Location,
   createRequest: GadgetRequest,
   updateRequest: Scalars['Boolean'],
@@ -109,6 +110,11 @@ export type MutationCreateCommentArgs = {
 export type MutationCreateGadgetArgs = {
   data: CreateGadgetInput,
   location: CreateLocationInput
+};
+
+
+export type MutationDeleteGadgetArgs = {
+  gadgetId: Scalars['ID']
 };
 
 
@@ -147,6 +153,7 @@ export type Query = {
   gadgetComments: Array<Comment>,
   gadgets: Array<Gadget>,
   gadget: Gadget,
+  gadgetsByUser: Array<Gadget>,
   countries: Array<Scalars['String']>,
   locations: Array<Location>,
   profile: User,
